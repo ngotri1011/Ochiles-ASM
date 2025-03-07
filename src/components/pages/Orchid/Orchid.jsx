@@ -10,16 +10,6 @@ const PageContainer = styled("div")`
   min-height: 100vh;
 `;
 
-const BackgroundImage = styled("img")`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-`;
-
 const OrchidCard = styled("div")`
   position: relative;
   display: flex;
@@ -62,7 +52,6 @@ export default function Orchid({ orchids }) {
 
   return (
     <PageContainer>
-      {/* <BackgroundImage src={bgImg} alt="background" /> */}
       <div className="container">
         <div className="row">
           {orchids && orchids.length > 0 ? (
@@ -70,21 +59,24 @@ export default function Orchid({ orchids }) {
               <div className="col-md-4 d-flex align-items-stretch" key={item.id}>
                 <OrchidCard className="card text-center">
                   {item.isSpecial && <Ribbon src={ribbonImg} alt="Special" />}
-                  
-                  <div
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    onClick={() => setSelectedItem(item)}
-                  >
+
+                  {/* Bọc hình ảnh trong <Link> để đảm bảo UI không vỡ */}
+                  <Link to={`/detail/${item.id}`} style={{ display: "block" }}>
                     <OrchidImage src={item.image} alt={item.name} />
-                  </div>
+                  </Link>
 
                   <CardBody>
                     <h5>{item.name}</h5>
                     <p>{item.category}</p>
-                    <Link to={`/detail/${item.id}`} className="btn btn-primary">
+                    {/* Khi bấm vào nút -> Mở modal */}
+                    <button
+                      className="btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      onClick={() => setSelectedItem(item)}
+                    >
                       View Details
-                    </Link>
+                    </button>
                   </CardBody>
                 </OrchidCard>
               </div>
