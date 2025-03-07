@@ -1,0 +1,107 @@
+import React from 'react';
+import orchidLogo2 from '../../assets/images/orchid-logo-dall-E-removebg-preview.png';
+import { NavLink } from 'react-router-dom';
+
+export default function Navigation() {
+  return (
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ marginBottom: '20px' }}>
+      <div class="container-fluid">
+        <NavLink to='/' class="navbar-brand-img" style={{textDecoration:'none'}}><img src={orchidLogo2} alt='' style={{width:"50px"}}></img></NavLink>
+        <NavLink to='/' class="navbar-brand-text" style={{textDecoration:'none', marginRight:'20px', color:'Pink'}}><h3 style={{fontWeight:'bold', marginTop:'10px'}}>Orchiles</h3></NavLink>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <NavLink
+                to="/"
+                className="nav-link"
+                style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? 'black' : 'gray',
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  borderBottom: isActive ? '2px solid black' : 'none',
+                  paddingBottom: '5px',
+                })}
+              >
+                Home
+              </NavLink>
+            </li>
+            <li class="nav-item">
+              <NavLink
+                to="/blog"
+                className="nav-link"
+                style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? 'black' : 'gray',
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  borderBottom: isActive ? '2px solid black' : 'none',
+                  paddingBottom: '5px',
+                })}
+              >
+                Blog
+              </NavLink>
+            </li>
+            <li class="nav-item">
+              <NavLink
+                to="/about"
+                className="nav-link"
+                style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? 'black' : 'gray',
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  borderBottom: isActive ? '2px solid black' : 'none',
+                  paddingBottom: '5px',
+                })}
+              >
+                About
+              </NavLink>
+            </li>
+            <li class="nav-item">
+              <NavLink
+                to="/contact"
+                className="nav-link"
+                style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? 'black' : 'gray',
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  borderBottom: isActive ? '2px solid black' : 'none',
+                  paddingBottom: '5px',
+                })}
+              >
+                Contact
+              </NavLink>
+            </li>
+            <li class="nav-item">
+              <NavLink
+                to="/dashboard"
+                className="nav-link"
+                style={({ isActive }) => ({
+                  textDecoration: 'none',
+                  color: isActive ? 'black' : 'gray',
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  borderBottom: isActive ? '2px solid black' : 'none',
+                  paddingBottom: '5px',
+                })}
+              >
+                Dashboard
+              </NavLink>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+
+      {/* <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            </li> */}
+
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+
+    </nav >
+  );
+}
