@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { ShoppingCart, Search } from "@mui/icons-material"; // Import icons
 import ribbonImg from "../../../assets/images/ribbon-red.png";
 import bgImg from "../../../assets/images/orchid-bg.jpg";
 
@@ -24,12 +25,18 @@ const OrchidCard = styled("div")`
   }
 `;
 
-const OrchidImage = styled("img")`
+const OrchidImageContainer = styled("div")`
+  position: relative;
   width: 100%;
   height: 250px;
-  object-fit: cover;
   border-radius: 8px 8px 0 0;
-  cursor: pointer;
+  overflow: hidden;
+`;
+
+const OrchidImage = styled("img")`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const Ribbon = styled("img")`
@@ -47,6 +54,32 @@ const CardBody = styled("div")`
   text-align: center;
 `;
 
+// New: Icon Container
+const IconContainer = styled("div")`
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+`;
+
+const IconButton = styled("div")`
+  background-color: pink;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  &:hover {
+    background-color: #ff6699;
+  }
+`;
+
 export default function Orchid({ orchids }) {
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -60,15 +93,25 @@ export default function Orchid({ orchids }) {
                 <OrchidCard className="card text-center">
                   {item.isSpecial && <Ribbon src={ribbonImg} alt="Special" />}
 
-                  {/* Bọc hình ảnh trong <Link> để đảm bảo UI không vỡ */}
+                  {/* Bọc hình ảnh trong <Link> */}
                   <Link to={`/detail/${item.id}`} style={{ display: "block" }}>
-                    <OrchidImage src={item.image} alt={item.name} />
+                    <OrchidImageContainer>
+                      <OrchidImage src={item.image} alt={item.name} />
+                      {/* Icon Container */}
+                      <IconContainer>
+                        <IconButton>
+                          <ShoppingCart />
+                        </IconButton>
+                        <IconButton>
+                          <Search />
+                        </IconButton>
+                      </IconContainer>
+                    </OrchidImageContainer>
                   </Link>
 
                   <CardBody>
                     <h5>{item.name}</h5>
                     <p>{item.category}</p>
-                    {/* Khi bấm vào nút -> Mở modal */}
                     <button
                       className="btn btn-primary"
                       data-bs-toggle="modal"
