@@ -3,14 +3,8 @@ import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import { ShoppingCart, Search } from "@mui/icons-material"; // Import icons
 import ribbonImg from "../../../assets/images/ribbon-red.png";
-import bgImg from "../../../assets/images/orchid-bg.jpg";
 
 // Styled Components
-const PageContainer = styled("div")`
-  position: relative;
-  min-height: 100vh;
-`;
-
 const OrchidCard = styled("div")`
   position: relative;
   display: flex;
@@ -54,12 +48,11 @@ const CardBody = styled("div")`
   text-align: center;
 `;
 
-// New: Icon Container
+
 const IconContainer = styled("div")`
   position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 150px;
+  right: 10px; /* Đưa icon container vào góc phải */
   display: flex;
   gap: 10px;
 `;
@@ -83,53 +76,57 @@ const IconButton = styled("div")`
 export default function Orchid({ orchids }) {
   const [selectedItem, setSelectedItem] = useState(null);
 
+  // Hàm mở modal khi click vào icon search
+  const handleSearchClick = (item) => {
+    setSelectedItem(item);
+    const modal = new window.bootstrap.Modal(document.getElementById("exampleModal"));
+    modal.show();
+  };
+
   return (
-    <PageContainer>
-      <div className="container">
-        <div className="row">
-          {orchids && orchids.length > 0 ? (
-            orchids.map((item) => (
-              <div className="col-md-4 d-flex align-items-stretch" key={item.id}>
-                <OrchidCard className="card text-center">
-                  {item.isSpecial && <Ribbon src={ribbonImg} alt="Special" />}
+    <div className="container">
+      <div className="row">
+        {orchids && orchids.length > 0 ? (
+          orchids.map((item) => (
+            <div className="col-md-4 d-flex align-items-stretch" key={item.id}>
+              <OrchidCard className="card text-center">
+                {item.isSpecial && <Ribbon src={ribbonImg} alt="Special" />}
 
-                  {/* Bọc hình ảnh trong <Link> */}
-                  <Link to={`/detail/${item.id}`} style={{ display: "block" }}>
-                    <OrchidImageContainer>
-                      <OrchidImage src={item.image} alt={item.name} />
-                      {/* Icon Container */}
-                      <IconContainer>
-                        <IconButton>
-                          <ShoppingCart />
-                        </IconButton>
-                        <IconButton>
-                          <Search />
-                        </IconButton>
-                      </IconContainer>
-                    </OrchidImageContainer>
-                  </Link>
-
-                  <CardBody>
-                    <h5>{item.name}</h5>
-                    <p>{item.category}</p>
-                    <button
-                      className="btn btn-primary"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                      onClick={() => setSelectedItem(item)}
-                    >
-                      View Details
-                    </button>
-                  </CardBody>
-                </OrchidCard>
-              </div>
-            ))
-          ) : (
-            <div className="col-12">
-              <p>No data available</p>
+                {/* Bọc hình ảnh trong <Link> */}
+                <Link to={`/detail/${item.id}`} style={{ display: "block" }}>
+                  <OrchidImageContainer>
+                    <OrchidImage src={item.image} alt={item.name} />
+                  </OrchidImageContainer>
+                </Link>
+                {/* Icon Container */}
+                <IconContainer>
+                  <IconButton>
+                    <ShoppingCart />
+                  </IconButton>
+                  <IconButton onClick={() => handleSearchClick(item)}>
+                    <Search />
+                  </IconButton>
+                </IconContainer>
+                <CardBody>
+                  <h5>{item.name}</h5>
+                  <p>{item.category}</p>
+                  <button
+                    className="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    onClick={() => setSelectedItem(item)}
+                  >
+                    View Details
+                  </button>
+                </CardBody>
+              </OrchidCard>
             </div>
-          )}
-        </div>
+          ))
+        ) : (
+          <div className="col-12">
+            <p>No data available</p>
+          </div>
+        )}
       </div>
 
       {/* Bootstrap Modal */}
@@ -167,6 +164,6 @@ export default function Orchid({ orchids }) {
           </div>
         </div>
       </div>
-    </PageContainer>
+    </div>
   );
 }
