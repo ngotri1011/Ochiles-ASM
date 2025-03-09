@@ -129,7 +129,7 @@ function Contact() {
                             {formik.errors.agree && <Alert variant="warning">{formik.errors.agree}</Alert>}
                         </Form.Group>
 
-                        <Button variant="primary" type="submit">
+                        <Button variant="primary" type="submit" style={{backgroundColor:"#B03052", borderColor:"black"}}>
                             Submit
                         </Button>
                     </Form>

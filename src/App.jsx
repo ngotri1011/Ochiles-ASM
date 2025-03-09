@@ -8,6 +8,7 @@ import Detail from "./components/pages/Detail/Detail";
 import Main from "./components/Main/Main";
 import About from "./components/pages/About/About";
 import Blog from "./components/pages/Blog/Blog";
+import AddUser from "./components/Add/AddUser";
 
 function App() {
   const appStyle = {
@@ -18,6 +19,7 @@ function App() {
 
   const contentStyle = {
     flex: "1",
+    backgroundColor:"#EBE8DB"
   };
   return (
     <div className="App" style={appStyle}>
@@ -29,6 +31,7 @@ function App() {
           <Route path="/blog" element={<Blog />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path='/contact' element={<Contact />}></Route>
+          <Route path="/add" element={<AddUser />}></Route>
         </Routes>
       </div>
 

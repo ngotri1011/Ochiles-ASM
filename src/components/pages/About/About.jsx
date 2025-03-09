@@ -10,7 +10,7 @@ const AboutContainer = styled(Container)`
 `;
 
 const HighlightText = styled.span`
-  color: #FFC0CB;
+  color: #B03052;
   font-weight: bold;
 `;
 
@@ -32,9 +32,9 @@ const About = () => {
       <Box mt={3}>
         <Button
           variant="contained"
-          sx={{ backgroundColor: '#FFC0CB', '&:hover': { backgroundColor: 'rgb(199, 124, 137)' } }}
+          sx={{ backgroundColor: '#B03052', '&:hover': { backgroundColor: '#84263f' } }}
           component={Link}
-          to="/shop"
+          to="#"
         >
           Explore Our Collection
         </Button>

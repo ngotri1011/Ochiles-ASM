@@ -25,6 +25,7 @@
     "react-redux": "^9.2.0",
     "react-router": "^7.2.0",
     "react-router-dom": "^7.1.5",
+    "sass": "^1.85.1",
     "styled-components": "^6.1.15",
     "twin.macro": "^3.4.1",
     "use-local-storage": "^3.0.0",

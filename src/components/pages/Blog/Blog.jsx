@@ -59,8 +59,8 @@ const Blog = () => {
               <Card.Body className="d-flex flex-column">
                 <Card.Title>{post.title}</Card.Title>
                 <Card.Text className="flex-grow-1">{post.description}</Card.Text>
-                <Link to={`/blog/${post.id}`}>
-                  <Button variant="primary" className="mt-auto">Read More</Button>
+                <Link /* to={`/blog/${post.id}`} */ to={`#`}>
+                  <Button variant="primary" className="mt-auto" style={{backgroundColor:"#B03052", borderColor:"black"}}>Read More</Button>
                 </Link>
               </Card.Body>
             </BlogCard>

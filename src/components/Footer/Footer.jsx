@@ -2,17 +2,15 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaCopyright } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import orchidLogo2 from '../../assets/images/orchid-logo-dall-E-removebg-preview.png';
-import { NavLink } from 'react-router-dom';
 const Footer = () => {
   return (
-    <footer className="bg-dark text-light py-4" style={{fontFamily: 'Arial, sans-serif'}}>
+    <footer className="text-light py-4" style={{fontFamily: 'Arial, sans-serif',backgroundColor: '#3D0301'}}>
       <Container>
         <Row className="align-items-center">
           <Col md={4} className="text-center text-md-start mb-3 mb-md-0">
-          <NavLink to='/' class="navbar-brand-img" style={{textDecoration:'none'}}><img src={orchidLogo2} alt='' style={{width:"50px"}}></img></NavLink>
-          <NavLink to='/' class="navbar-brand-text" style={{textDecoration:'none', marginRight:'20px', color:'Pink',fontWeight:'bold'}}><h3 style={{fontWeight:'bold', marginTop:'10px'}}>Orchiles</h3></NavLink>
+            <img className="navbar-brand-img" src={orchidLogo2} alt='' style={{width:"50px"}}></img>
+            <h3 className="navbar-brand-text" style={{fontWeight:'bold', marginTop:'10px',textDecoration:'none', marginRight:'20px', color:'Pink'}}>Orchiles</h3>
           </Col>
           <Col md={4} className="text-center">
             <a href="/privacy-policy" className="text-light mx-2">Privacy Policy</a> |

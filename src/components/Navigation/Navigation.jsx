@@ -4,14 +4,14 @@ import { NavLink } from 'react-router-dom';
 
 export default function Navigation() {
   return (
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" style={{ marginBottom: '20px' }}>
+    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#EBE8DB' }}>
       <div class="container-fluid">
         <NavLink to='/' class="navbar-brand-img" style={{textDecoration:'none'}}><img src={orchidLogo2} alt='' style={{width:"50px"}}></img></NavLink>
-        <NavLink to='/' class="navbar-brand-text" style={{textDecoration:'none', marginRight:'20px', color:'Pink'}}><h3 style={{fontWeight:'bold', marginTop:'10px'}}>Orchiles</h3></NavLink>
+        <NavLink to='/' class="navbar-brand-text" style={{textDecoration:'none', marginRight:'20px', color:'#B03052'}}><h3 style={{fontWeight:'bold', marginTop:'10px'}}>Orchiles</h3></NavLink>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" >
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <NavLink
@@ -75,7 +75,7 @@ export default function Navigation() {
             </li>
             <li class="nav-item">
               <NavLink
-                to="/dashboard"
+                to="/add"
                 className="nav-link"
                 style={({ isActive }) => ({
                   textDecoration: 'none',
@@ -85,7 +85,7 @@ export default function Navigation() {
                   paddingBottom: '5px',
                 })}
               >
-                Dashboard
+                Add
               </NavLink>
             </li>
           </ul>
@@ -99,7 +99,7 @@ export default function Navigation() {
 
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="btn btn-outline-success" type="submit" style={{borderColor:"#B03052", color:"#B03052"}}>Search</button>
       </form>
 
     </nav >
