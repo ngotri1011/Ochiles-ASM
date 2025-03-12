@@ -1,6 +1,4 @@
-// ListOfOrchids.js
 export const dataOrchid = [
-
   {
     "id": "1",
     "name": "Taichung Beauty",
@@ -11,7 +9,8 @@ export const dataOrchid = [
     "origin": "Taiwan",
     "category": "Cattleya",
     "info": "A beautiful pink orchid originating from Taiwan, admired for its vibrant colors and fragrance.",
-    "cost": 100
+    "cost": 100,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "2",
@@ -23,7 +22,8 @@ export const dataOrchid = [
     "origin": "Thailand",
     "category": "Dendrobium",
     "info": "A stunning yellow orchid with a warm glow, native to Thailand and popular for its durability.",
-    "cost": 300
+    "cost": 300,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "3",
@@ -35,7 +35,8 @@ export const dataOrchid = [
     "origin": "Japan",
     "category": "Cymbidium",
     "info": "This elegant white orchid is prized for its pearl-like petals and delicate fragrance.",
-    "cost": 500
+    "cost": 500,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "4",
@@ -47,7 +48,8 @@ export const dataOrchid = [
     "origin": "India",
     "category": "Vanda",
     "info": "A captivating purple orchid with soft hues, originating from the tropical regions of India.",
-    "cost": 93
+    "cost": 93,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "5",
@@ -59,7 +61,8 @@ export const dataOrchid = [
     "origin": "Brazil",
     "category": "Cattleya",
     "info": "A fiery red orchid from Brazil, celebrated for its intense color and bold appearance.",
-    "cost": 2300
+    "cost": 2300,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "6",
@@ -71,7 +74,8 @@ export const dataOrchid = [
     "origin": "Colombia",
     "category": "Oncidium",
     "info": "A rare green orchid that glows with a unique charm, originating from the lush forests of Colombia.",
-    "cost": 47
+    "cost": 47,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "7",
@@ -83,7 +87,8 @@ export const dataOrchid = [
     "origin": "Australia",
     "category": "Phalaenopsis",
     "info": "A regal white orchid with pristine petals, often associated with purity and grace.",
-    "cost": 50
+    "cost": 50,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "8",
@@ -95,7 +100,8 @@ export const dataOrchid = [
     "origin": "Mexico",
     "category": "Cattleya",
     "info": "An orange orchid that radiates warmth and energy, native to the vibrant landscapes of Mexico.",
-    "cost": 120
+    "cost": 120,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "9",
@@ -107,7 +113,8 @@ export const dataOrchid = [
     "origin": "Sri Lanka",
     "category": "Cymbidium",
     "info": "A rich ruby-red orchid from Sri Lanka, cherished for its luxurious appearance and longevity.",
-    "cost": 430
+    "cost": 430,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "10",
@@ -119,7 +126,8 @@ export const dataOrchid = [
     "origin": "Malaysia",
     "category": "Vanda",
     "info": "A serene blue orchid with calming tones, often found in the lush environments of Malaysia.",
-    "cost": 210
+    "cost": 210,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "11",
@@ -131,7 +139,8 @@ export const dataOrchid = [
     "origin": "Vietnam",
     "category": "Dendrobium",
     "info": "A yellow orchid that captures the beauty of a sunset, native to the picturesque landscapes of Vietnam.",
-    "cost": 30
+    "cost": 30,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "12",
@@ -143,7 +152,8 @@ export const dataOrchid = [
     "origin": "Philippines",
     "category": "Phalaenopsis",
     "info": "A majestic orchid with deep crimson hues, symbolizing power and beauty.",
-    "cost": 75
+    "cost": 75,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "13",
@@ -155,7 +165,8 @@ export const dataOrchid = [
     "origin": "China",
     "category": "Vanda",
     "info": "A dreamy purple orchid that captivates with its vibrant amethyst tones, popular in China.",
-    "cost": 29
+    "cost": 29,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "14",
@@ -167,7 +178,8 @@ export const dataOrchid = [
     "origin": "Indonesia",
     "category": "Cymbidium",
     "info": "A glowing yellow orchid that reflects the beauty of golden hour, hailing from Indonesia.",
-    "cost": 96
+    "cost": 96,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "15",
@@ -179,7 +191,8 @@ export const dataOrchid = [
     "origin": "Costa Rica",
     "category": "Oncidium",
     "info": "A mysterious blue orchid with an enchanting appearance, found in Costa Rica.",
-    "cost": 55
+    "cost": 55,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   },
   {
     "id": "16",
@@ -191,10 +204,7 @@ export const dataOrchid = [
     "origin": "South Korea",
     "category": "Cattleya",
     "info": "A delicate pink orchid with an elegant charm, native to South Korea.",
-    "cost": 400
+    "cost": 400,
+    "clip": "https://www.example.com/active_orchid_video.mp4"
   }
-
-
 ];
-
-

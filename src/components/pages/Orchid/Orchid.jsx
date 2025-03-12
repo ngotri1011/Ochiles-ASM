@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import { Rating } from "@mui/material";
+import { FaVideo } from "react-icons/fa";
 
 // Styled Components
 const OrchidCard = styled("div")`
@@ -101,7 +102,14 @@ const Ribbon = styled("div")`
     border-color: #990000 transparent transparent transparent;
   }
 `;
-
+const VideoIcon = styled(FaVideo)`
+  border-radius: 50%;
+  background-color: orange;
+  padding: 8px;
+  color: white; 
+  width: 40px;
+  height: 40px;
+`;
 export default function Orchid({ orchids }) {
   const [selectedItem, setSelectedItem] = useState(null);
   return (
@@ -121,7 +129,7 @@ export default function Orchid({ orchids }) {
                     <OrchidImage src={item.image} alt={item.name} />
                   </OrchidImageContainer>
                 </Link>
-                
+                <VideoIcon style={{position:"absolute", right:"5",top: "50%",transform: "translateY(-50%)",}}/>
                 <CardBody>
                   <h5>{item.name}</h5>
                   <p>{item.category}</p>
@@ -132,7 +140,6 @@ export default function Orchid({ orchids }) {
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     onClick={() => setSelectedItem(item)}
-                    
                   >
                     View Details
                   </button>

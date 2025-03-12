@@ -1,39 +1,38 @@
 import React from 'react';
-import { Container, Typography, Box, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Accordion, Container } from 'react-bootstrap';
+import { FaLeaf, FaHandHoldingWater, FaLightbulb } from 'react-icons/fa';
+
 
 const About = () => {
   return (
-    <Container
-      sx={{
-        textAlign: 'center',
-        padding: '3rem 1rem',
-        maxWidth: '800px',
-      }}
-    >
-      <Typography variant="h3" gutterBottom>
-        Welcome to <Typography component="span" sx={{ color: '#B03052', fontWeight: 'bold', fontSize: '2.5rem' }}>Orchiles</Typography>
-      </Typography>
-
-      <Typography variant="body1" paragraph>
-        At Orchid, we are passionate about bringing you the finest selection of orchids
-        and plant care essentials. Our mission is to provide high-quality plants,
-        expert care advice, and a seamless shopping experience.
-      </Typography>
-      <Typography variant="body1" paragraph>
-        Whether you are a beginner or a seasoned collector, our diverse range of orchids
-        and accessories ensures that you'll find the perfect addition to your collection.
-      </Typography>
-      <Box mt={3}>
-        <Button
-          variant="contained"
-          className='btn-main-style'
-          component={Link}
-          to="#"
-        >
-          Explore Our Collection
-        </Button>
-      </Box>
+    <Container className="mt-5">
+      <h2 className="mb-4 text-center">About Orchids</h2>
+      <Accordion defaultActiveKey="0">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>
+            <FaLeaf className="me-2" /> What are Orchids?
+          </Accordion.Header>
+          <Accordion.Body>
+            Orchids are a diverse and widespread family of flowering plants, with blooms that are often colorful and fragrant. They are known for their beauty and unique structure.
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="1">
+          <Accordion.Header>
+            <FaHandHoldingWater className="me-2" /> How to Care for Orchids?
+          </Accordion.Header>
+          <Accordion.Body>
+            Orchids require indirect sunlight, moderate watering, and a well-draining potting mix. Avoid overwatering and ensure proper humidity levels for optimal growth.
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="2">
+          <Accordion.Header>
+            <FaLightbulb className="me-2" /> Interesting Facts about Orchids
+          </Accordion.Header>
+          <Accordion.Body>
+            Did you know that orchids are one of the largest plant families on Earth? They can be found on every continent except Antarctica, and vanilla comes from a type of orchid!
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
     </Container>
   );
 };

@@ -5,6 +5,7 @@ import { styled } from "@mui/material/styles";
 import { Button } from "react-bootstrap";
 import { Rating } from "@mui/material";
 import { IoArrowBackSharp } from "react-icons/io5";
+import { IoCheckmarkCircleSharp, IoCloseCircleSharp } from "react-icons/io5";
 // Styled Components
 const PageContainer = styled("div")`
   position: relative;
@@ -12,7 +13,6 @@ const PageContainer = styled("div")`
   display: flex;
   justify-content: center;
   align-items: center;
-  
 `;
 
 const DetailCard = styled("div")`
@@ -113,15 +113,30 @@ export default function Detail() {
   const { id } = useParams();
   const orchid = dataOrchid.find((obj) => obj.id == id);
   let cost = orchid.cost.toLocaleString();
-
+  const BoldLabel = ({ children }) => (
+    <span style={{ fontWeight: "bold", marginRight: "5px" }}>{children}</span>
+  );
+  const SpecialText = ({ isSpecial }) => (
+    <span style={{ color: isSpecial ? "green" : "red", fontWeight: "bold" }}>
+      {isSpecial ? (
+        <>
+          <IoCheckmarkCircleSharp style={{ color: "green" }} />
+        </>
+      ) : (
+        <>
+          <IoCloseCircleSharp style={{ color: "red" }} />
+        </>
+      )}
+    </span>
+  );
   return (
     <PageContainer>
       <DetailCard>
         <BackButtonContainer>
           <Link to={"/"} style={{ textDecoration: "none" }}>
-          
+
             <Button variant="primary" className="btn-main-style">
-            <IoArrowBackSharp/>
+              <IoArrowBackSharp />
               Back to Home page
             </Button>
           </Link>
@@ -135,22 +150,37 @@ export default function Detail() {
           <OrchidImage src={orchid.image} alt={orchid.name} />
         </ImageContainer>
         <DetailsContainer>
-          <h3 style={{fontWeight:'bold'}}>{orchid.name}</h3>
-          <p style={{fontWeight:'lighter'}}>{orchid.info}</p>
-          <div>Origin: {orchid.origin}</div>
-          <div>Market value: € {cost}</div>
+          <h3 style={{ fontWeight: 'bold' }}>{orchid.name}</h3>
+          <p style={{ fontWeight: 'lighter' }}>{orchid.info}</p>
           <div>
-            Orchid's Special:
-            <SpecialText isSpecial={orchid.isSpecial}>
-              {orchid.isSpecial ? "Yes" : "No"}
-            </SpecialText>
+            <BoldLabel>Origin:</BoldLabel> {orchid.origin}
           </div>
-          <div>Category: {orchid.category}</div>
           <div>
-            Color: <span style={{ color: orchid.color }}>{orchid.color}</span>
+            <BoldLabel>Market value:</BoldLabel> € {cost}
+          </div>
+          <div>
+            <BoldLabel>Orchid's special:</BoldLabel>
+            <SpecialText isSpecial={orchid.isSpecial} />
+          </div>
+          <div>
+            <BoldLabel>Category:</BoldLabel> {orchid.category}
+          </div>
+          <div>
+            <BoldLabel>Color:</BoldLabel>
+            <span
+              style={{
+                display: "inline-block",
+                width: "15px",
+                height: "15px",
+                backgroundColor: orchid.color,
+                border: "1px solid #ddd",
+                marginLeft: "5px",
+                borderRadius: "3px",
+              }}
+            ></span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-            <span>Rating:</span>
+            <BoldLabel>Rating:</BoldLabel>
             <Rating name="read-only" value={orchid.rating} readOnly />
           </div>
         </DetailsContainer>
