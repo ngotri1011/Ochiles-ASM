@@ -148,7 +148,7 @@ export const dataOrchid = [
     "rating": 5,
     "isSpecial": true,
     "image": "https://theorchidpatio.com.au/cdn/shop/files/spc_000021117_000002595.jpg?v=1684227429",
-    "color": "dark red",
+    "color": "red",
     "origin": "Philippines",
     "category": "Phalaenopsis",
     "info": "A majestic orchid with deep crimson hues, symbolizing power and beauty.",

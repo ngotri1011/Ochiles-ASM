@@ -11,6 +11,7 @@ import Blog from "./components/pages/Blog/Blog";
 import OrchidList from "./components/orchidlist/OrchidList";
 import OrchidEdit from "./components/orchidlist/OrchidEdit";
 import OrchidAdd from "./components/orchidlist/OrchidAdd";
+import ReduxDemo from "./features/ReduxDemo";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/list" element={<OrchidList />} />
           <Route path="/edit/:id" element={<OrchidEdit />} />
           <Route path="/add" element={<OrchidAdd />} />
+          <Route path="/redux" element={<ReduxDemo />} />
         </Routes>
       </div>
       <Footer />
