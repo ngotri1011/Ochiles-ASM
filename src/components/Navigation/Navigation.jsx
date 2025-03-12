@@ -1,13 +1,19 @@
 import React from 'react';
 import orchidLogo2 from '../../assets/images/orchid-logo-dall-E-removebg-preview.png';
 import { NavLink } from 'react-router-dom';
+import { useThemeContext } from "../../darkmode/ThemeContext";
+import { IconButton } from "@mui/material";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+
 
 export default function Navigation() {
+  const { mode, toggleTheme } = useThemeContext();
   return (
-    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#EBE8DB' }}>
+    <nav className="navbar navbar-expand-lg Navigation">
       <div class="container-fluid">
-        <NavLink to='/' class="navbar-brand-img" style={{textDecoration:'none'}}><img src={orchidLogo2} alt='' style={{width:"50px"}}></img></NavLink>
-        <NavLink to='/' class="navbar-brand-text" style={{textDecoration:'none', marginRight:'20px', color:'#B03052'}}><h3 style={{fontWeight:'bold', marginTop:'10px'}}>Orchiles</h3></NavLink>
+        <NavLink to='/' class="navbar-brand-img" style={{ textDecoration: 'none' }}><img src={orchidLogo2} alt='' style={{ width: "50px" }}></img></NavLink>
+        <NavLink to='/' class="navbar-brand-text" style={{ textDecoration: 'none', marginRight: '20px', color: '#B03052' }}><h3 style={{ fontWeight: 'bold', marginTop: '10px' }}>Orchiles</h3></NavLink>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -30,7 +36,7 @@ export default function Navigation() {
             </li>
             <li class="nav-item">
               <NavLink
-                to="/blog"
+                to="/news"
                 className="nav-link"
                 style={({ isActive }) => ({
                   textDecoration: 'none',
@@ -40,7 +46,7 @@ export default function Navigation() {
                   paddingBottom: '5px',
                 })}
               >
-                Blog
+                News
               </NavLink>
             </li>
             <li class="nav-item">
@@ -75,7 +81,7 @@ export default function Navigation() {
             </li>
             <li class="nav-item">
               <NavLink
-                to="/add"
+                to="/list"
                 className="nav-link"
                 style={({ isActive }) => ({
                   textDecoration: 'none',
@@ -85,7 +91,7 @@ export default function Navigation() {
                   paddingBottom: '5px',
                 })}
               >
-                Add
+                List
               </NavLink>
             </li>
           </ul>
@@ -93,15 +99,13 @@ export default function Navigation() {
         </div>
       </div>
 
-      {/* <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li> */}
-
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-        <button class="btn btn-outline-success" type="submit" style={{borderColor:"#B03052", color:"#B03052"}}>Search</button>
+        <button class="btn btn-outline-success" type="submit" style={{ borderColor: "#B03052", color: "#B03052" }}>Search</button>
       </form>
-
+      <IconButton onClick={toggleTheme} color="inherit">
+        {mode === "light" ? <DarkModeIcon /> : <LightModeIcon />}
+      </IconButton>
     </nav >
   );
 }

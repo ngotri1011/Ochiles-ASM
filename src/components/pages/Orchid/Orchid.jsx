@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { Rating } from "@mui/material";
 
 // Styled Components
 const OrchidCard = styled("div")`
@@ -50,6 +51,7 @@ const CardBody = styled("div")`
   color: black;
   padding: 15px;
   text-align: center;
+  border-radius: 0 0 8px 8px;
 `;
 
 const RibbonContainer = styled("div")`
@@ -77,7 +79,7 @@ const Ribbon = styled("div")`
   letter-spacing: 1.5px;
   text-align: center;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23);
-  
+  clip-path: polygon(27% 0%, 73% 0%, 100% 100%, 0% 100%);
   &::before,
   &::after {
     content: '';
@@ -103,7 +105,7 @@ const Ribbon = styled("div")`
 export default function Orchid({ orchids }) {
   const [selectedItem, setSelectedItem] = useState(null);
   return (
-    <div className="container" style={{backgroundColor:"#EBE8DB"}}>
+    <div className="container" >
       <div className="row" style={{ margin: "20px" }}>
         {orchids && orchids.length > 0 ? (
           orchids.map((item) => (
@@ -123,12 +125,14 @@ export default function Orchid({ orchids }) {
                 <CardBody>
                   <h5>{item.name}</h5>
                   <p>{item.category}</p>
+                  <p>Price: {item.cost} $</p>
+                  <p><Rating name="half-rating-read" defaultValue={2.5} precision={0.5} value={item.rating} readOnly /></p>
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-primary btn-main-style"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     onClick={() => setSelectedItem(item)}
-                    style={{backgroundColor:"#B03052", borderColor:"black"}}
+                    
                   >
                     View Details
                   </button>

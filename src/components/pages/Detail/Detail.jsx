@@ -1,9 +1,10 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { dataOrchid } from "../../../Share/ListOfOrchids";
 import { styled } from "@mui/material/styles";
-import bgImg from "../../../assets/images/orchid-bg.jpg";
-
+import { Button } from "react-bootstrap";
+import { Rating } from "@mui/material";
+import { IoArrowBackSharp } from "react-icons/io5";
 // Styled Components
 const PageContainer = styled("div")`
   position: relative;
@@ -11,7 +12,7 @@ const PageContainer = styled("div")`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(${bgImg}) no-repeat center center/cover;
+  
 `;
 
 const DetailCard = styled("div")`
@@ -52,7 +53,7 @@ const Ribbon = styled("div")`
   letter-spacing: 1.5px;
   text-align: center;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23);
-  
+  clip-path: polygon(21% 0%, 80% 0%, 100% 100%, 0% 100%);
   &::before,
   &::after {
     content: '';
@@ -102,6 +103,12 @@ const SpecialText = styled("span")`
   margin-left: 5px;
 `;
 
+const BackButtonContainer = styled("div")`
+  position: absolute;
+  top: -50px;
+  left: 0;
+`;
+
 export default function Detail() {
   const { id } = useParams();
   const orchid = dataOrchid.find((obj) => obj.id == id);
@@ -110,6 +117,15 @@ export default function Detail() {
   return (
     <PageContainer>
       <DetailCard>
+        <BackButtonContainer>
+          <Link to={"/"} style={{ textDecoration: "none" }}>
+          
+            <Button variant="primary" className="btn-main-style">
+            <IoArrowBackSharp/>
+              Back to Home page
+            </Button>
+          </Link>
+        </BackButtonContainer>
         {orchid.isSpecial && (
           <RibbonContainer>
             <Ribbon>Special</Ribbon>
@@ -119,8 +135,8 @@ export default function Detail() {
           <OrchidImage src={orchid.image} alt={orchid.name} />
         </ImageContainer>
         <DetailsContainer>
-          <h3>{orchid.name}</h3>
-          <p>{orchid.info}</p>
+          <h3 style={{fontWeight:'bold'}}>{orchid.name}</h3>
+          <p style={{fontWeight:'lighter'}}>{orchid.info}</p>
           <div>Origin: {orchid.origin}</div>
           <div>Market value: € {cost}</div>
           <div>
@@ -133,7 +149,10 @@ export default function Detail() {
           <div>
             Color: <span style={{ color: orchid.color }}>{orchid.color}</span>
           </div>
-          <div>Rating: {orchid.rating}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+            <span>Rating:</span>
+            <Rating name="read-only" value={orchid.rating} readOnly />
+          </div>
         </DetailsContainer>
       </DetailCard>
     </PageContainer>

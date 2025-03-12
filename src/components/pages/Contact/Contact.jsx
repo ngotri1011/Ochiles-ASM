@@ -3,12 +3,11 @@ import { useState } from "react";
 import { Col, Container, Row, Form, Button, Alert } from "react-bootstrap";
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
-import bgImg from "../../../assets/images/orchid-bg.jpg";
-import orchidLogo2 from "../../../assets/images/orchid-logo-dall-E-removebg-preview.png";
 function Contact() {
     const formik = useFormik({
         initialValues: {
             name: "",
+            phone: "",
             email: "",
             content: "",
             major: "",
@@ -28,19 +27,6 @@ function Contact() {
 
     return (
         <Container>
-            <img
-                src={bgImg}
-                alt="background"
-                style={{
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    zIndex: -1,
-                }}
-            />
             <Row className="justify-content-md-center" >
                 <Col
                     md={6}
@@ -53,15 +39,8 @@ function Contact() {
                     }}
                 >
                     <div style={{ justifyContent: 'center', display: 'flex' }}>
-                        <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        <h1 class="navbar-brand-img" style={{ textDecoration: 'none' }}>
-                            <img src={orchidLogo2} alt='' style={{ width: "50px" }}></img>
-                        </h1>
-                        <h2 class="navbar-brand-text"
-                            style={{ textDecoration: 'none', marginRight: '20px', color: 'Pink', fontWeight: 'bold' }}>
-                            <h3 style={{ fontWeight: 'bold', marginTop: '10px' }}>Orchiles</h3>
-                        </h2>
-                        </div>
+                        <h3>Contact Us</h3>
+                        
                         
                     </div>
                     <Form onSubmit={formik.handleSubmit}>
@@ -97,11 +76,11 @@ function Contact() {
                                 value={formik.values.major}
                                 onChange={formik.handleChange}
                             >
-                                <option value="">Select your major</option>
-                                <option value="Computer Science">Computer Science</option>
-                                <option value="Information Technology">Information Technology</option>
-                                <option value="Software Engineering">Software Engineering</option>
-                                <option value="Cyber Security">Cyber Security</option>
+                                <option value="">Select your favorite orchid</option>
+                                <option value="Computer Science">Taichung Beauty</option>
+                                <option value="Information Technology">Golden Sunset</option>
+                                <option value="Software Engineering">Moonlit Pearl</option>
+                                <option value="Cyber Security">Lavender Mist</option>
                             </Form.Select>
                             {formik.errors.major && <Alert variant="warning">{formik.errors.major}</Alert>}
                         </Form.Group>
@@ -129,7 +108,7 @@ function Contact() {
                             {formik.errors.agree && <Alert variant="warning">{formik.errors.agree}</Alert>}
                         </Form.Group>
 
-                        <Button variant="primary" type="submit" style={{backgroundColor:"#B03052", borderColor:"black"}}>
+                        <Button variant="primary" type="submit" className="btn-main-style">
                             Submit
                         </Button>
                     </Form>

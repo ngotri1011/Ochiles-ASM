@@ -50,7 +50,7 @@ const BlogCard = styled(Card)`
 const Blog = () => {
   return (
     <BlogContainer>
-      <BlogTitle>Our Latest Blog Posts</BlogTitle>
+      <BlogTitle>Our Latest News Posts</BlogTitle>
       <Row className="justify-content-center">
         {blogPosts.map((post) => (
           <Col key={post.id} md={4} className="d-flex align-items-stretch mb-4">
@@ -60,7 +60,7 @@ const Blog = () => {
                 <Card.Title>{post.title}</Card.Title>
                 <Card.Text className="flex-grow-1">{post.description}</Card.Text>
                 <Link /* to={`/blog/${post.id}`} */ to={`#`}>
-                  <Button variant="primary" className="mt-auto" style={{backgroundColor:"#B03052", borderColor:"black"}}>Read More</Button>
+                  <Button variant="primary" className="btn-main-style" >Read More</Button>
                 </Link>
               </Card.Body>
             </BlogCard>

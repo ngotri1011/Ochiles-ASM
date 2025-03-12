@@ -1,11 +1,11 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaCopyright } from 'react-icons/fa';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import orchidLogo2 from '../../assets/images/orchid-logo-dall-E-removebg-preview.png';
 const Footer = () => {
   return (
-    <footer className="text-light py-4" style={{fontFamily: 'Arial, sans-serif',backgroundColor: '#3D0301'}}>
+    <footer className="text-light py-4 Footer">
       <Container>
         <Row className="align-items-center">
           <Col md={4} className="text-center text-md-start mb-3 mb-md-0">

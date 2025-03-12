@@ -1,0 +1,1 @@
+export const OrchidAPI = "https://67cc1caf3395520e6af72e9c.mockapi.io/fer202/v1/Assignment";

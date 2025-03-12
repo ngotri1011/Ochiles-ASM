@@ -1,0 +1,63 @@
+@use './scss/mixins' as *;
+@use './scss/variables' as *;
+.btn-wrapper{
+  display: flex;
+  justify-content: center;
+}
+body {
+
+}
+// App
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.Navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: #fff; // Ensure it has a background to cover content underneath
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+}
+
+.Content {
+  flex-grow: 1;
+  padding: 20px;
+  margin-top: 60px; // Adjust this based on the height of your navbar
+}
+
+.Footer {
+  width: 100%;
+  background-color: $color-4;
+  padding: 10px 0;
+  text-align: center;
+}
+.orchid-list{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+//dark mode
+body {
+  transition: background-color 0.3s ease;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #fff;
+}
+
+[data-theme="light"] {
+  --bg-color: #fff;
+  --text-color: #333;
+}
+
+.app-container {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
