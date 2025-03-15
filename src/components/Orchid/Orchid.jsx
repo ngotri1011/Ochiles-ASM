@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import { Rating } from "@mui/material";
 import { FaVideo } from "react-icons/fa";
-import { OrchidAPI } from "../../api/OrchidAPI";
+import { Orchid_URL } from "../../api/OrchidAPI";
 
 // Styled Components
 const OrchidCard = styled("div")`
@@ -121,7 +121,7 @@ export default function Orchid() {
   useEffect(() => {
     const fetchOrchids = async () => {
       try {
-        const response = await fetch(OrchidAPI);
+        const response = await fetch(Orchid_URL);
         if (!response.ok) {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
@@ -185,6 +185,41 @@ export default function Orchid() {
             <p>No data available</p>
           </div>
         )}
+      </div>
+      {/* Bootstrap Modal */}
+      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-scrollable">
+          <div className="modal-content" style={{ backgroundColor: "white", color: "black" }}>
+            <div className="modal-header">
+              <h5 className="modal-title">{selectedItem?.name || "Orchid Details"}</h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              {selectedItem && (
+                <>
+                  <img
+                    src={selectedItem.image}
+                    alt={selectedItem.name}
+                    className="img-fluid rounded mx-auto d-block"
+                    style={{ maxHeight: "300px", objectFit: "cover" }}
+                  />
+                  <h6 className="mt-3">{selectedItem.name}</h6>
+                  <p>{selectedItem.info}</p>
+                </>
+              )}
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

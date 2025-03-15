@@ -5,7 +5,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Rating } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { OrchidAPI } from "../../api/OrchidAPI";
+import { Orchid_URL } from "../../api/OrchidAPI";
 
 export default function OrchidAdd() {
   const navigate = useNavigate();
@@ -38,15 +38,21 @@ export default function OrchidAdd() {
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      // Using axios-based OrchidAPI.post instead of fetch.
-      const response = await OrchidAPI.post(values);
-      console.log("Response status:", response.status);
-      console.log("Response data:", response.data);
+      const response = await fetch(Orchid_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
 
-      // Optionally check the status (201 is typical for POST creation)
-      if (response.status !== 201 && response.status !== 200) {
-        throw new Error("Failed to add orchid");
+      if (!response.ok) {
+        throw new Error('Failed to add orchid');
       }
+
+      const data = await response.json();
+      console.log("Response status:", response.status);
+      console.log("Response data:", data);
 
       toast.success("Orchid added successfully!", { position: "top-right", autoClose: 2000 });
       resetForm();
@@ -99,7 +105,8 @@ export default function OrchidAdd() {
                   <Form.Label>Rating</Form.Label>
                   <div>
                     <Rating
-                      name="rating"
+                      name="half-rating"
+                      precision={0.5}
                       value={values.rating}
                       onChange={(e, newValue) => setFieldValue("rating", newValue)}
                     />
@@ -181,28 +188,23 @@ export default function OrchidAdd() {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                {/* Category (as a select) */}
+                {/* Category  */}
                 <Form.Group controlId="category" className="mb-3">
                   <Form.Label>Category</Form.Label>
-                  <Form.Select
+                  <Form.Control
+                    type="text"
                     name="category"
                     value={values.category}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     isInvalid={touched.category && errors.category}
-                  >
-                    <option value="">Select Category</option>
-                    <option value="Cattleya">Cattleya</option>
-                    <option value="Dendrobium">Dendrobium</option>
-                    <option value="Cymbidium">Cymbidium</option>
-                    <option value="Vanda">Vanda</option>
-                    <option value="Oncidium">Oncidium</option>
-                    <option value="Phalaenopsis">Phalaenopsis</option>
-                  </Form.Select>
+                    placeholder="Enter Category"
+                  />
                   <Form.Control.Feedback type="invalid">
                     {errors.category}
                   </Form.Control.Feedback>
                 </Form.Group>
+
 
                 {/* Info */}
                 <Form.Group controlId="info" className="mb-3">
@@ -239,7 +241,7 @@ export default function OrchidAdd() {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                {/* Buttons */} 
+                {/* Buttons */}
                 <div className="d-flex justify-content-between">
                   <Button type="submit" variant="primary" className="btn-main-style">
                     Add Orchid

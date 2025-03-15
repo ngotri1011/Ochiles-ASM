@@ -156,7 +156,7 @@ export default function Detail() {
             <BoldLabel>Origin:</BoldLabel> {orchid.origin}
           </div>
           <div>
-            <BoldLabel>Market value:</BoldLabel> € {cost}
+            <BoldLabel>Market value:</BoldLabel> {cost}$
           </div>
           <div>
             <BoldLabel>Orchid's special:</BoldLabel>

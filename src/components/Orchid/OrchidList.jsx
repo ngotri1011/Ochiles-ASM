@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdModeEdit } from "react-icons/md";
 import { FaTrashAlt } from "react-icons/fa";
-import { OrchidAPI } from "../../api/OrchidAPI";
+import { Orchid_URL } from "../../api/OrchidAPI";
 
 export default function OrchidList() {
   const [orchids, setOrchids] = useState([]);
@@ -18,7 +18,7 @@ export default function OrchidList() {
   useEffect(() => {
     const fetchOrchids = async () => {
       try {
-        const response = await fetch(OrchidAPI);
+        const response = await fetch(Orchid_URL);
         if (!response.ok) {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
@@ -52,11 +52,27 @@ export default function OrchidList() {
   const handlePageChange = (page) => setCurrentPage(page);
 
   // Handle Delete
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this orchid?");
     if (confirmDelete) {
-      setOrchids((prevOrchids) => prevOrchids.filter((orchid) => orchid.id !== id));
-      toast.success("Orchid deleted successfully!");
+      try {
+        const response = await fetch(`${Orchid_URL}/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to delete orchid');
+        }
+
+        setOrchids((prevOrchids) => prevOrchids.filter((orchid) => orchid.id !== id));
+        toast.success("Orchid deleted successfully!", { position: "top-right", autoClose: 2000 });
+      } catch (error) {
+        console.error("Error deleting orchid:", error);
+        toast.error("Failed to delete orchid. Please try again.", { position: "top-right", autoClose: 2000 });
+      }
     }
   };
 
@@ -108,7 +124,7 @@ export default function OrchidList() {
                     <td>{orchid.origin}</td>
                     <td>{orchid.category}</td>
                     <td>{orchid.info}</td>
-                    <td>{orchid.cost}</td>
+                    <td>{orchid.cost}$</td>
                     <td>
                       <div className="btn-wrapper">
                         <Link to={`/edit/${orchid.id}`}>

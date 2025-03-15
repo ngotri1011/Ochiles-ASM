@@ -5,13 +5,11 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import { Route, Routes } from "react-router-dom";
 import Detail from "./components/Detail";
-import Main from "./components/Main";
 import About from "./components/About";
 import Blog from "./components/Blog";
 import OrchidList from "./components/Orchid/OrchidList";
 import OrchidEdit from "./components/Orchid/OrchidEdit";
 import OrchidAdd from "./components/Orchid/OrchidAdd";
-import ReduxDemo from "./features/ReduxDemo";
 import Orchid from "./components/Orchid/Orchid";
 function App() {
   return (
@@ -27,7 +25,6 @@ function App() {
           <Route path="/list" element={<OrchidList />} />
           <Route path="/edit/:id" element={<OrchidEdit />} />
           <Route path="/add" element={<OrchidAdd />} />
-          <Route path="/redux" element={<ReduxDemo />} />
         </Routes>
       </div>
       <Footer />
