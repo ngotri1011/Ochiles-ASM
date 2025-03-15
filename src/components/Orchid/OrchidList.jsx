@@ -1,53 +1,67 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Image, Pagination, Row, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdModeEdit } from "react-icons/md";
 import { FaTrashAlt } from "react-icons/fa";
-import { dataOrchid } from "../../Share/ListOfOrchids";
+import { OrchidAPI } from "../../api/OrchidAPI";
 
 export default function OrchidList() {
-  const [API, setAPI] = useState([]);
-
-  useEffect(() => {
-    const remappedData = dataOrchid.map((orchid, index) => ({
-      id: index + 1,
-      name: orchid.name || "Unknown",
-      rating: orchid.rating || 0,
-      isSpecial: orchid.isSpecial || false,
-      image: orchid.image || "https://via.placeholder.com/100",
-      color: orchid.color || "Unknown",
-      origin: orchid.origin || "Unknown",
-      category: orchid.category || "General",
-      info: orchid.info || "No information available",
-      cost: orchid.cost || "N/A",
-    }));
-    setAPI(remappedData);
-  }, []);
-
+  const [orchids, setOrchids] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const numRowsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedData, setPaginatedData] = useState([]);
 
+  // Fetch data from API
   useEffect(() => {
-    const sortedApi = [...API].sort((a, b) => a.id - b.id);
+    const fetchOrchids = async () => {
+      try {
+        const response = await fetch(OrchidAPI);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          const errorText = await response.text();
+          throw new Error(`Invalid JSON response: ${errorText.substring(0, 100)}`);
+        }
+        const data = await response.json();
+        setOrchids(data);
+      } catch (error) {
+        console.error("Failed to fetch orchids:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrchids();
+  }, []);
+
+  // Pagination logic
+  useEffect(() => {
+    const sortedOrchids = [...orchids].sort((a, b) => a.id - b.id);
     const start = (currentPage - 1) * numRowsPerPage;
     const end = start + numRowsPerPage;
-    setPaginatedData(sortedApi.slice(start, end));
-  }, [API, currentPage]);
+    setPaginatedData(sortedOrchids.slice(start, end));
+  }, [orchids, currentPage]);
 
-  const numPages = Math.ceil(API.length / numRowsPerPage);
+  const numPages = Math.ceil(orchids.length / numRowsPerPage);
 
   const handlePageChange = (page) => setCurrentPage(page);
 
+  // Handle Delete
   const handleDelete = (id) => {
-    const confirmed = window.confirm("Are you sure you want to delete this item ?");
-    if (confirmed) {
-      setAPI(API.filter((item) => item.id !== id));
-      toast.success("Deleted successfully!!", { position: "top-right", autoClose: 2000 });
+    const confirmDelete = window.confirm("Are you sure you want to delete this orchid?");
+    if (confirmDelete) {
+      setOrchids((prevOrchids) => prevOrchids.filter((orchid) => orchid.id !== id));
+      toast.success("Orchid deleted successfully!");
     }
   };
+
+  if (loading) return <p>Loading orchids...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="orchid-list">
@@ -61,6 +75,7 @@ export default function OrchidList() {
             </Link>
           </Col>
         </Row>
+
         <Row className="justify-content-md-center" style={{ marginTop: "20px" }}>
           <Col md={12}>
             <Table striped bordered hover className="dashboard__table">
@@ -84,7 +99,7 @@ export default function OrchidList() {
                   <tr key={orchid.id}>
                     <td>{orchid.id}</td>
                     <td className="image">
-                      <Image src={orchid.image} rounded width={100} />
+                      <Image src={orchid.image || "https://via.placeholder.com/100"} rounded width={100} />
                     </td>
                     <td>{orchid.name}</td>
                     <td>{orchid.rating}</td>

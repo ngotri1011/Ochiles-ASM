@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import UsersData from '../Share/ListOfUsers';
+import UsersData from '../data/ListOfUsers';
 
 export const userSlice = createSlice({
         name: "users",

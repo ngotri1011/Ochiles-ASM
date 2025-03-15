@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
-import { dataOrchid } from "../../../Share/ListOfOrchids";
+import { dataOrchid } from "../data/ListOfOrchids";
 import { styled } from "@mui/material/styles";
 import { Button } from "react-bootstrap";
 import { Rating } from "@mui/material";

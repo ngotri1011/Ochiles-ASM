@@ -1,25 +1,25 @@
 import "./App.scss";
 import React from "react";
-import Contact from "./components/pages/Contact/Contact";
-import Navigation from "./components/Navigation/Navigation";
-import Footer from "./components/Footer/Footer";
+import Contact from "./components/Contact";
+import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 import { Route, Routes } from "react-router-dom";
-import Detail from "./components/pages/Detail/Detail";
-import Main from "./components/Main/Main";
-import About from "./components/pages/About/About";
-import Blog from "./components/pages/Blog/Blog";
-import OrchidList from "./components/orchidlist/OrchidList";
-import OrchidEdit from "./components/orchidlist/OrchidEdit";
-import OrchidAdd from "./components/orchidlist/OrchidAdd";
+import Detail from "./components/Detail";
+import Main from "./components/Main";
+import About from "./components/About";
+import Blog from "./components/Blog";
+import OrchidList from "./components/Orchid/OrchidList";
+import OrchidEdit from "./components/Orchid/OrchidEdit";
+import OrchidAdd from "./components/Orchid/OrchidAdd";
 import ReduxDemo from "./features/ReduxDemo";
-
+import Orchid from "./components/Orchid/Orchid";
 function App() {
   return (
     <div className="App">
       <Navigation />
       <div className="Content">
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<Orchid />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/news" element={<Blog />} />
           <Route path="/about" element={<About />} />

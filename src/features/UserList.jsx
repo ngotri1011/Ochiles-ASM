@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
-import { deleteUser, updateUsername } from './Users';
+import { deleteUser, updateUsername } from './userSlice';
 import { Button, IconButton, ListItem, ListItemText, TextField } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 

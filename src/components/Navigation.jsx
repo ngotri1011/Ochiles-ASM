@@ -1,7 +1,7 @@
 import React from 'react';
-import orchidLogo2 from '../../assets/images/orchid-logo-dall-E-removebg-preview.png';
+import orchidLogo2 from '../assets/images/orchid-logo-dall-E-removebg-preview.png';
 import { NavLink } from 'react-router-dom';
-import { useThemeContext } from "../../darkmode/ThemeContext";
+import { useThemeContext } from "../darkmode/ThemeContext";
 import { IconButton } from "@mui/material";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";

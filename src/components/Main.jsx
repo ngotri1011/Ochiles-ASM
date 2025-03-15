@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { dataOrchid } from '../../Share/ListOfOrchids'
-import Orchid from '../pages/Orchid/Orchid';
+import { dataOrchid } from '../data/ListOfOrchids'
+import Orchid from './Orchid/Orchid';
 export class Main extends Component {
     constructor() {
         super();

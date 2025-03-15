@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import { Rating } from "@mui/material";
 import { FaVideo } from "react-icons/fa";
+import { OrchidAPI } from "../../api/OrchidAPI";
 
 // Styled Components
 const OrchidCard = styled("div")`
@@ -89,13 +90,13 @@ const Ribbon = styled("div")`
     border-style: solid;
     border-width: 0;
   }
-  
+
   &::before {
     left: 0;
     border-width: 0 5px 5px 0;
     border-color: transparent #990000 transparent transparent;
   }
-  
+
   &::after {
     right: 0;
     border-width: 5px 5px 0 0;
@@ -110,10 +111,42 @@ const VideoIcon = styled(FaVideo)`
   width: 40px;
   height: 40px;
 `;
-export default function Orchid({ orchids }) {
+
+export default function Orchid() {
+  const [orchids, setOrchids] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchOrchids = async () => {
+      try {
+        const response = await fetch(OrchidAPI);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          const errorText = await response.text();
+          throw new Error(`Invalid JSON response: ${errorText.substring(0, 100)}`);
+        }
+        const data = await response.json();
+        setOrchids(data);
+      } catch (error) {
+        console.error("Failed to fetch orchids:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrchids();
+  }, []);
+
+  if (loading) return <p>Loading orchids...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
-    <div className="container" >
+    <div className="container">
       <div className="row" style={{ margin: "20px" }}>
         {orchids && orchids.length > 0 ? (
           orchids.map((item) => (
@@ -152,42 +185,6 @@ export default function Orchid({ orchids }) {
             <p>No data available</p>
           </div>
         )}
-      </div>
-
-      {/* Bootstrap Modal */}
-      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-scrollable">
-          <div className="modal-content" style={{ backgroundColor: "white", color: "black" }}>
-            <div className="modal-header">
-              <h5 className="modal-title">{selectedItem?.name || "Orchid Details"}</h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              {selectedItem && (
-                <>
-                  <img
-                    src={selectedItem.image}
-                    alt={selectedItem.name}
-                    className="img-fluid rounded mx-auto d-block"
-                    style={{ maxHeight: "300px", objectFit: "cover" }}
-                  />
-                  <h6 className="mt-3">{selectedItem.name}</h6>
-                  <p>{selectedItem.info}</p>
-                </>
-              )}
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

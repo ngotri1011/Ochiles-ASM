@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { addUser } from './Users';
+import { addUser } from './userSlice';
 import { useDispatch } from 'react-redux';
 import { Button, TextField } from '@mui/material';
 
