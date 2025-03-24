@@ -73,7 +73,7 @@ const Routes = () => {
                         {
                             path: "edit/:id",
                             element: <OrchidEdit />
-                        },
+                        }
                         
                     ]
                 }
