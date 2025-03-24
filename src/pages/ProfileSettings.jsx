@@ -1,7 +1,7 @@
-// ProfileSettings.js
 import React, { useState, useEffect } from 'react';
 import { auth } from '../firebase';
-import { Avatar, Box, Button, Container, TextField, Typography, IconButton } from '@mui/material';
+import { updateProfile, updateEmail, updatePassword } from "firebase/auth";
+import { Avatar, Box, Button, Container, TextField, Typography, IconButton, Snackbar, Alert } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
 const ProfileSettings = () => {
@@ -9,10 +9,13 @@ const ProfileSettings = () => {
 
     const [name, setName] = useState(user ? user.displayName : '');
     const [email, setEmail] = useState(user ? user.email : '');
-    const [password, setPassword] = useState('********'); // Placeholder for password
+    const [password, setPassword] = useState(''); // Password input for updating
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingEmail, setIsEditingEmail] = useState(false);
     const [isEditingPassword, setIsEditingPassword] = useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarVariant, setSnackbarVariant] = useState('success'); // Default to success
 
     useEffect(() => {
         if (user) {
@@ -33,15 +36,52 @@ const ProfileSettings = () => {
         setPassword(e.target.value);
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSnackbarMessage(''); // Clear previous message
+
+        try {
+            // Update display name
+            if (isEditingName) {
+                await updateProfile(user, { displayName: name });
+                setIsEditingName(false);
+            }
+
+            // Update email if it's changed
+            if (isEditingEmail && email !== user.email) {
+                await updateEmail(user, email);
+                setIsEditingEmail(false);
+            }
+
+            // Update password if it's provided
+            if (isEditingPassword && password) {
+                await updatePassword(user, password);
+                setIsEditingPassword(false);
+            }
+
+            setSnackbarMessage("Profile updated successfully!");
+            setSnackbarVariant('success');
+            setSnackbarOpen(true); // Open the Snackbar
+        } catch (error) {
+            setSnackbarMessage(error.message);
+            setSnackbarVariant('error');
+            setSnackbarOpen(true); // Open the Snackbar for error messages
+        }
+    };
+
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
+
     return (
-        <Container sx={{ my: 15, display: "flex", flexDirection: "row", justifyContent: "center", backgroundColor: "background.paper", p: 20, borderRadius: 8 }}>
+        <Container sx={{ my: 15, display: "flex", flexDirection: "row", justifyContent: "center", backgroundColor: "background.paper", p: 4, borderRadius: 2 }}>
             {user && (
                 <>
                     <Avatar alt={user.displayName} src={user.photoURL} sx={{ width: 100, height: 100 }} />
-                    <Box sx={{ maxWidth: 400, ml:5 }}>
+                    <Box sx={{ maxWidth: 400, ml: 5 }}>
                         <Typography variant="h4" gutterBottom>{user.displayName}</Typography>
                         <Typography variant="h6" gutterBottom>{user.email}</Typography>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             {isEditingName ? (
                                 <TextField
                                     label="Name"
@@ -89,44 +129,45 @@ const ProfileSettings = () => {
                                 />
                             ) : (
                                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <Typography variant="body1">{password}</Typography>
+                                    <Typography variant="body1">********</Typography>
                                     <IconButton onClick={() => setIsEditingPassword(true)}>
                                         <EditIcon />
                                     </IconButton>
                                 </Box>
                             )}
-                            <Button type="button" variant="contained" color="primary" fullWidth onClick={() => {
-                                setIsEditingName(false);
-                                setIsEditingEmail(false);
-                                setIsEditingPassword(false);
-                            }}>
+                            <Button type="submit" variant="contained" color="primary" fullWidth>
                                 Update
                             </Button>
                         </form>
                     </Box>
                 </>
             )}
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={handleSnackbarClose}
+            >
+                <Alert onClose={handleSnackbarClose} severity={snackbarVariant} sx={{ width: '100%' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </Container>
     );
 };
 
 export default ProfileSettings;
 
-// // ProfileSettings.js
 // import React, { useState, useEffect } from 'react';
 // import { auth } from '../firebase';
-// import { updateProfile, updateEmail, updatePassword } from "firebase/auth";
 // import { Avatar, Box, Button, Container, TextField, Typography, IconButton } from '@mui/material';
 // import EditIcon from '@mui/icons-material/Edit';
 
 // const ProfileSettings = () => {
-//     const user = auth.currentUser ;
+//     const user = auth.currentUser;
 
 //     const [name, setName] = useState(user ? user.displayName : '');
 //     const [email, setEmail] = useState(user ? user.email : '');
-//     const [password, setPassword] = useState(''); // Password input for updating
-//     const [successMessage, setSuccessMessage] = useState('');
-//     const [errorMessage, setErrorMessage] = useState('');
+//     const [password, setPassword] = useState('********'); // Placeholder for password
 //     const [isEditingName, setIsEditingName] = useState(false);
 //     const [isEditingEmail, setIsEditingEmail] = useState(false);
 //     const [isEditingPassword, setIsEditingPassword] = useState(false);
@@ -150,45 +191,15 @@ export default ProfileSettings;
 //         setPassword(e.target.value);
 //     };
 
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         setSuccessMessage('');
-//         setErrorMessage('');
-
-//         try {
-//             // Update display name
-//             if (isEditingName) {
-//                 await updateProfile(user, { displayName: name });
-//                 setIsEditingName(false);
-//             }
-
-//             // Update email if it's changed
-//             if (isEditingEmail && email !== user.email) {
-//                 await updateEmail(user, email);
-//                 setIsEditingEmail(false);
-//             }
-
-//             // Update password if it's provided
-//             if (isEditingPassword && password) {
-//                 await updatePassword(user, password);
-//                 setIsEditingPassword(false);
-//             }
-
-//             setSuccessMessage("Profile updated successfully!");
-//         } catch (error) {
-//             setErrorMessage(error.message);
-//         }
-//     };
-
 //     return (
-//         <Container sx={{ my: 15, display: "flex", flexDirection: "row", justifyContent: "center", backgroundColor: "background.paper", p: 4, borderRadius: 2 }}>
+//         <Container sx={{ my: 15, display: "flex", flexDirection: "row", justifyContent: "center", backgroundColor: "background.paper", p: 20, borderRadius: 8 }}>
 //             {user && (
 //                 <>
 //                     <Avatar alt={user.displayName} src={user.photoURL} sx={{ width: 100, height: 100 }} />
-//                     <Box sx={{ maxWidth: 400, ml: 5 }}>
+//                     <Box sx={{ maxWidth: 400, ml:5 }}>
 //                         <Typography variant="h4" gutterBottom>{user.displayName}</Typography>
 //                         <Typography variant="h6" gutterBottom>{user.email}</Typography>
-//                         <form onSubmit={handleSubmit}>
+//                         <form>
 //                             {isEditingName ? (
 //                                 <TextField
 //                                     label="Name"
@@ -236,18 +247,20 @@ export default ProfileSettings;
 //                                 />
 //                             ) : (
 //                                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-//                                     <Typography variant="body1">********</Typography>
+//                                     <Typography variant="body1">{password}</Typography>
 //                                     <IconButton onClick={() => setIsEditingPassword(true)}>
 //                                         <EditIcon />
 //                                     </IconButton>
 //                                 </Box>
 //                             )}
-//                             <Button type="submit" variant="contained" color="primary" fullWidth>
+//                             <Button type="button" variant="contained" color="primary" fullWidth onClick={() => {
+//                                 setIsEditingName(false);
+//                                 setIsEditingEmail(false);
+//                                 setIsEditingPassword(false);
+//                             }}>
 //                                 Update
 //                             </Button>
 //                         </form>
-//                         {successMessage && <Typography color="green">{successMessage}</Typography>}
-//                         {errorMessage && <Typography color="red">{errorMessage}</Typography>}
 //                     </Box>
 //                 </>
 //             )}
