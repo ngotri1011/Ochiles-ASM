@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import { Box, Button, Rating, Typography, Paper, Container, CircularProgress, Dialog, IconButton, DialogTitle } from "@mui/material";
+import { Box, Button, Rating, Typography, Paper, Container, CircularProgress, Dialog, IconButton, DialogTitle, Tabs, Tab, TextField } from "@mui/material";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -154,19 +154,19 @@ const VideoPlayButton = styled(IconButton)(({ theme }) => ({
 
 const getYouTubeEmbedUrl = (url) => {
   if (!url) return null;
-  
+
   // Handle youtu.be format
   if (url.includes('youtu.be/')) {
     const videoId = url.split('youtu.be/')[1].split('?')[0];
     return `https://www.youtube.com/embed/${videoId}`;
   }
-  
+
   // Handle youtube.com/watch?v= format
   if (url.includes('youtube.com/watch?v=')) {
     const videoId = url.split('v=')[1].split('&')[0];
     return `https://www.youtube.com/embed/${videoId}`;
   }
-  
+
   return null;
 };
 
@@ -176,6 +176,8 @@ export default function Detail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [videoOpen, setVideoOpen] = useState(false);
+  const [value, setValue] = useState(0);
+  const [feedback, setFeedback] = useState('');
 
   useEffect(() => {
     const fetchOrchidDetail = async () => {
@@ -215,6 +217,10 @@ export default function Detail() {
     </PageContainer>
   );
 
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <PageContainer>
       <DetailCard elevation={3}>
@@ -234,9 +240,9 @@ export default function Detail() {
           </Link>
         </BackButtonContainer>
 
-        {orchid.isFragrance && (
+        {orchid.isFeatured && (
           <RibbonContainer>
-            <Ribbon>Fragrance</Ribbon>
+            <Ribbon>Featured</Ribbon>
           </RibbonContainer>
         )}
 
@@ -257,71 +263,98 @@ export default function Detail() {
             {orchid.name}
           </Typography>
 
-          <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
-            {orchid.info}
-          </Typography>
+          {/* Tabs Section */}
+          <Tabs value={value} onChange={handleTabChange}>
+            <Tab label="Description" />
+            <Tab label="Feedback" />
+          </Tabs>
 
-          <InfoRow>
-            <LocationOnIcon />
-            <Typography variant="subtitle1">Origin: {orchid.origin}</Typography>
-          </InfoRow>
+          {value === 0 && (
+            <DetailsContainer>
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+                {orchid.info}
+              </Typography>
 
-          <InfoRow>
-            <AttachMoneyIcon />
-            <Typography variant="subtitle1">Price: ${orchid.cost.toLocaleString()}</Typography>
-          </InfoRow>
+              <InfoRow>
+                <LocationOnIcon />
+                <Typography variant="subtitle1">Origin: {orchid.origin}</Typography>
+              </InfoRow>
 
-          <InfoRow>
-            <Typography variant="subtitle1">
-              Fragrance: {' '}
-              {orchid.isFragrance ? (
-                <CheckCircleIcon sx={{ color: "green", verticalAlign: 'middle' }} />
-              ) : (
-                <CancelIcon sx={{ color: "red", verticalAlign: 'middle' }} />
-              )}
-            </Typography>
-          </InfoRow>
+              <InfoRow>
+                <AttachMoneyIcon />
+                <Typography variant="subtitle1">Price: ${orchid.cost.toLocaleString()}</Typography>
+              </InfoRow>
 
-          <InfoRow>
-            <CategoryIcon />
-            <Typography variant="subtitle1">Category: {orchid.category}</Typography>
-          </InfoRow>
+              <InfoRow>
+                <Typography variant="subtitle1">
+                  Fragrance: {' '}
+                  {orchid.isFragrance ? (
+                    <CheckCircleIcon sx={{ color: "green", verticalAlign: 'middle' }} />
+                  ) : (
+                    <CancelIcon sx={{ color: "red", verticalAlign: 'middle' }} />
+                  )}
+                </Typography>
+              </InfoRow>
 
-          <InfoRow>
-            <PaletteIcon />
-            <Typography variant="subtitle1">
-              Color:{' '}
-              <Box
-                component="span"
-                sx={{
-                  display: 'inline-block',
-                  width: 20,
-                  height: 20,
-                  bgcolor: orchid.color,
-                  borderRadius: '50%',
-                  border: '2px solid #ddd',
-                  verticalAlign: 'middle',
-                  ml: 1,
-                }}
+              <InfoRow>
+                <CategoryIcon />
+                <Typography variant="subtitle1">Category: {orchid.category}</Typography>
+              </InfoRow>
+
+              <InfoRow>
+                <PaletteIcon />
+                <Typography variant="subtitle1">
+                  Color:{' '}
+                  <Box
+                    component="span"
+                    sx={{
+                      display: 'inline-block',
+                      width: 20,
+                      height: 20,
+                      bgcolor: orchid.color,
+                      borderRadius: '50%',
+                      border: '2px solid #ddd',
+                      verticalAlign: 'middle',
+                      ml: 1,
+                    }}
+                  />
+                </Typography>
+              </InfoRow>
+
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 2 }}>
+                <Typography variant="subtitle1">Rating:</Typography>
+                <Rating
+                  value={orchid.rating}
+                  readOnly
+                  precision={0.5}
+                  sx={{ color: 'primary.main' }}
+                />
+                <Typography variant="body2" color="text.secondary">
+                  ({orchid.rating}/5)
+                </Typography>
+              </Box>
+            </DetailsContainer>
+          )}
+
+          {/* Feedback Tab Content */}
+          {value === 1 && (
+            <Box sx={{ p: 2 }}>
+              <Typography variant="h6" gutterBottom>
+                Leave your feedback:
+              </Typography>
+              <TextField
+                fullWidth
+                multiline
+                rows={4}
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                placeholder="Share your thoughts..."
+                variant="outlined"
               />
-            </Typography>
-          </InfoRow>
-
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 2 }}>
-            <Typography variant="subtitle1">Rating:</Typography>
-            <Rating
-              value={orchid.rating}
-              readOnly
-              precision={0.5}
-              sx={{ color: 'primary.main' }}
-            />
-            <Typography variant="body2" color="text.secondary">
-              ({orchid.rating}/5)
-            </Typography>
-          </Box>
+            </Box>
+          )}
         </DetailsContainer>
       </DetailCard>
-
       {/* Video Modal */}
       <Dialog
         open={videoOpen}
@@ -329,8 +362,8 @@ export default function Detail() {
         maxWidth="md"
         fullWidth
       >
-        <Box sx={{ 
-          position: 'relative', 
+        <Box sx={{
+          position: 'relative',
           bgcolor: 'background.paper',
           borderRadius: 1,
           overflow: 'hidden'
@@ -347,9 +380,9 @@ export default function Detail() {
           }}>
             Video for {orchid?.name}
           </DialogTitle>
-          <Box sx={{ 
-            width: '100%', 
-            pt: '56.25%', 
+          <Box sx={{
+            width: '100%',
+            pt: '56.25%',
             position: 'relative',
             bgcolor: 'black'
           }}>
@@ -370,9 +403,9 @@ export default function Detail() {
               }}
             />
           </Box>
-          <Box sx={{ 
-            p: 2, 
-            display: 'flex', 
+          <Box sx={{
+            p: 2,
+            display: 'flex',
             justifyContent: 'flex-end',
             borderTop: 1,
             borderColor: 'divider'

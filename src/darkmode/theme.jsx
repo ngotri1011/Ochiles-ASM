@@ -16,7 +16,7 @@ export const darkTheme = createTheme({
     mode: "dark",  
     primary: { main: "#f48fb1" }, /* #f48fb1 */
     secondary: { main: "#90caf9" }, /* #90caf9 */
-    background: { default: "#121212", paper: "#1e1e1e" }, /* #121212 */ /* #1e1e1e */
+    background: { default: "#00020b", paper: "#01051f" }, /* #00020b */ /* #01051f*/
     text: { primary: "#fff", secondary: "#bbb" }, /* #ffffff */ /* #bbbbbb */
   },
 });

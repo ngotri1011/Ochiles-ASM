@@ -4,7 +4,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import {
     Box, Container, Rating, Typography, Button,
     Dialog, DialogTitle, DialogContent, DialogActions, IconButton,
-    Card, CardContent, CardMedia, Pagination, Stack, 
+    Card, CardContent, CardMedia, Pagination, Stack,
     Select,
     MenuItem,
     FormControlLabel,
@@ -133,7 +133,7 @@ export default function Orchid() {
     const [sortOption, setSortOption] = useState("All");
     const [categories, setCategories] = useState([]); // State for categories
     const [selectedCategories, setSelectedCategories] = useState([]); // State for selected categories
-    
+
     const handlePageChange = (event, value) => {
         setPage(value);
         // window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -169,19 +169,6 @@ export default function Orchid() {
         };
         fetchOrchids();
     }, []);
-
-    // // Filter orchids based on search query
-    // useEffect(() => {
-    //     if (!searchQuery.trim()) {
-    //         setFilteredOrchids(orchids);
-    //         return;
-    //     }
-
-    //     const filtered = orchids.filter(orchid =>
-    //         orchid.name.toLowerCase().includes(searchQuery.toLowerCase())
-    //     );
-    //     setFilteredOrchids(filtered);
-    // }, [searchQuery, orchids]);
 
     useEffect(() => {
         let filtered = orchids;
@@ -219,30 +206,30 @@ export default function Orchid() {
         const value = event.target.value;
         setSortOption(value);
         let sortedOrchids = [...orchids];
-    
+
         switch (value) {
-          case "featured":
-            sortedOrchids = orchids.filter(item => item.isFeatured);
-            break;
-          case "a-z":
-            sortedOrchids.sort((a, b) => a.name.localeCompare(b.name));
-            break;
-          case "z-a":
-            sortedOrchids.sort((a, b) => b.name.localeCompare(a.name));
-            break;
-          case "price-low-high":
-            sortedOrchids.sort((a, b) => a.cost - b.cost);
-            break;
-          case "price-high-low":
-            sortedOrchids.sort((a, b) => b.cost - a.cost);
-            break;
-          default:
-            sortedOrchids = orchids;
+            case "featured":
+                sortedOrchids = orchids.filter(item => item.isFeatured);
+                break;
+            case "a-z":
+                sortedOrchids.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case "z-a":
+                sortedOrchids.sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            case "price-low-high":
+                sortedOrchids.sort((a, b) => a.cost - b.cost);
+                break;
+            case "price-high-low":
+                sortedOrchids.sort((a, b) => b.cost - a.cost);
+                break;
+            default:
+                sortedOrchids = orchids;
         }
         setFilteredOrchids(sortedOrchids);
-      };
+    };
 
-      const handleItemsPerPageChange = (event) => {
+    const handleItemsPerPageChange = (event) => {
         setItemsPerPage(event.target.value);
         setPage(1); // Reset to first page when items per page changes
     };
@@ -258,7 +245,7 @@ export default function Orchid() {
 
         <Box sx={{ display: "flex" }}>
             {/* Filter Section */}
-            <Box sx={{ width: "30%", p: 2, mt:10 }}>
+            <Box sx={{ width: "900px", height: "100vh", p: 2, my: 15,ml:3, backgroundColor: "background.paper", position: "sticky", top: "0", overflowY: "auto",borderRadius:"8px" }}>
                 <Typography variant="h6">Sort By</Typography>
                 <Select value={sortOption} onChange={handleSortChange} fullWidth>
                     <MenuItem value="All">All</MenuItem>
@@ -279,7 +266,7 @@ export default function Orchid() {
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography variant="h6">Categories</Typography>
                     </AccordionSummary>
-                    <AccordionDetails>
+                    <AccordionDetails  sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
                         {categories.map((category) => (
                             <FormControlLabel
                                 key={category}
@@ -296,10 +283,10 @@ export default function Orchid() {
                     </AccordionDetails>
                 </Accordion>
             </Box>
-
+            {/* orchid grid section */}
             <Box sx={{ mt: 15, ml: 3 }} id="all-orchids">
                 <SectionTitle variant="h3">All Orchids</SectionTitle>
-                <Grid container spacing={2} sx={{ mt: 4, mb: 4, ml: 14 }}>
+                <Grid container spacing={2} sx={{ mt: 4, mb: 4 }}>
                     {filteredOrchids && filteredOrchids.length > 0 ? (
                         displayedOrchids.map((item) => (
                             <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
