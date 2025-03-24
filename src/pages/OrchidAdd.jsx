@@ -21,7 +21,7 @@ import {
   Alert
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { Orchid_URL } from "../../api/OrchidAPI";
+import { Orchid_URL } from "../api/OrchidAPI";
 
 // List of common orchid origins
 const nationOptions = [

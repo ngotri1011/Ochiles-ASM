@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Typography, Link, IconButton } from '@mui/material';
 import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 import { useThemeContext } from '../darkmode/ThemeContext';
-import orchidLogo2 from '../assets/images/orchid-logo-dall-E-removebg-preview.png';
+import orchidLogo2 from '../assets/orchid-logo-dall-E-removebg-preview.png';
 import * as React from 'react';
 const Footer = () => {
   const { mode } = useThemeContext();

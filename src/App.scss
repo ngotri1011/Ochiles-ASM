@@ -1,16 +1,11 @@
-@use './scss/mixins' as *;
+
 @use './scss/variables' as *;
 .btn-wrapper{
   display: flex;
   justify-content: center;
 }
 
-// App
-// .App {
-//   display: flex;
-//   flex-direction: column;
-//   min-height: 100vh;
-// }
+
 
 
 .Content {
@@ -35,17 +30,4 @@ body {
   transition: background-color 0.3s ease;
 }
 
-// [data-theme="dark"] {
-//   --bg-color: #121212;
-//   --text-color: #fff;
-// }
 
-// [data-theme="light"] {
-//   --bg-color: #fff;
-//   --text-color: #333;
-// }
-
-// .app-container {
-//   background-color: var(--bg-color);
-//   color: var(--text-color);
-// }

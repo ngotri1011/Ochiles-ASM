@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import { Link, useSearchParams } from "react-router-dom";
-import { Box, Container, Rating, Typography, Button,
-Dialog, DialogTitle, DialogContent, DialogActions, IconButton,
-Card, CardContent, CardMedia, Pagination, Stack, Paper, useTheme, useMediaQuery, Icon, TextField } from "@mui/material";
+import {
+  Box, Container, Rating, Typography, Button,
+  Dialog, DialogTitle, DialogContent, DialogActions, IconButton,
+  Card, CardContent, CardMedia, Pagination, Stack, Paper, useTheme, useMediaQuery, Icon, TextField
+} from "@mui/material";
 import Grid from '@mui/material/Grid2';
-import { Orchid_URL } from "../../api/OrchidAPI";
+import { Orchid_URL } from "../api/OrchidAPI";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -279,12 +281,12 @@ export default function Orchid() {
   };
 
   if (loading) return (
-    <Box 
-      sx={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '100vh' 
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh'
       }}
     >
       <CircularProgress size={60} />
@@ -306,7 +308,7 @@ export default function Orchid() {
               color: 'primary.main',
             },
           }}
-          pagination={{ 
+          pagination={{
             clickable: true,
             color: 'primary.main',
             '& .swiper-pagination-bullet-active': {
@@ -352,7 +354,7 @@ export default function Orchid() {
                   <ScrollButton
                     variant="contained"
                     onClick={() => {
-                      switch(slide.cta) {
+                      switch (slide.cta) {
                         case 'Shop Now':
                           scrollToSection('all-orchids');
                           break;
@@ -404,10 +406,10 @@ export default function Orchid() {
           {orchids.slice(0, 4).map((orchid) => (
             <Grid item xs={12} sm={6} md={3} key={orchid.id}>
               <Card sx={{ height: '100%', cursor: 'pointer' }}
-              onClick={() => {
-                const allOrchidsSection = document.getElementById('all-orchids');
-                allOrchidsSection?.scrollIntoView({ behavior: 'smooth' });
-              }}>
+                onClick={() => {
+                  const allOrchidsSection = document.getElementById('all-orchids');
+                  allOrchidsSection?.scrollIntoView({ behavior: 'smooth' });
+                }}>
                 <CardMedia
                   component="img"
                   height="200"
@@ -461,7 +463,7 @@ export default function Orchid() {
       </Box>
 
       {/* Existing Orchid Grid Section */}
-      <Box sx={{mt: 15, ml: 3}} id="all-orchids">
+      <Box sx={{ mt: 15, ml: 3 }} id="all-orchids">
         <SectionTitle variant="h3">
           All Orchids
         </SectionTitle>
@@ -469,7 +471,7 @@ export default function Orchid() {
           {filteredOrchids && filteredOrchids.length > 0 ? (
             displayedOrchids.map((item) => (
               <Grid xs={12} sm={6} md={4} lg={3} key={item.id}>
-                <Card sx={{ 
+                <Card sx={{
                   position: 'relative',
                   width: 300,
                   height: 460,
@@ -481,14 +483,15 @@ export default function Orchid() {
                     transform: 'scale(1.05)'
                   }
                 }}>
-                  {item.isFragrance&& (
+                  {item.isFeatured && (
+
                     <RibbonContainer>
-                      <Ribbon>Fragrance</Ribbon>
+                      <Ribbon>Featured</Ribbon>
                     </RibbonContainer>
                   )}
                   <CardMedia
                     component="div"
-                    sx={{ 
+                    sx={{
                       position: 'relative',
                       height: '320px',
                       borderRadius: '8px 8px 0 0',
@@ -525,26 +528,26 @@ export default function Orchid() {
                   }}>
                     <Typography variant="h6" sx={{ fontWeight: 'bold', lineHeight: 0.9 }}>{item.name}</Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 0.9 }}>${item.cost}</Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1,  }}>
-                      <Rating 
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, }}>
+                      <Rating
                         name="half-rating-read"
-                        defaultValue={2.5} 
-                        precision={0.5} 
-                        value={item.rating} 
-                        readOnly 
-                        sx={{color: 'primary.main'}}
+                        defaultValue={2.5}
+                        precision={0.5}
+                        value={item.rating}
+                        readOnly
+                        sx={{ color: 'primary.main' }}
                       />
                       <Typography color="text.secondary" sx={{ lineHeight: 0.5 }}>({item.rating}/5)</Typography>
                     </Box>
-                    <Link 
-                      to={`/detail/${item.id}`} 
+                    <Link
+                      to={`/detail/${item.id}`}
                       style={{ textDecoration: 'none' }}
                       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     >
                       <Button
                         variant="contained"
                         color="primary"
-                        sx={{ 
+                        sx={{
                           borderRadius: 1,
                           width: '100%',
                           height: 36,
@@ -594,7 +597,7 @@ export default function Orchid() {
         fullWidth
       >
         <DialogTitle>
-          <Typography sx={{ fontWeight: 'bold', fontSize: '2rem', variant:'h3' }}>{selectedItem?.name || "Orchid Details"}</Typography>
+          <Typography sx={{ fontWeight: 'bold', fontSize: '2rem', variant: 'h3' }}>{selectedItem?.name || "Orchid Details"}</Typography>
           <IconButton
             aria-label="close"
             onClick={() => setSelectedItem(null)}
@@ -622,9 +625,9 @@ export default function Orchid() {
                   margin: '20px auto',
                 }}
               />
-              <Typography sx={{color: 'text.secondary'}}><span style={{fontWeight: 'bold'}}>Category:</span> {selectedItem.category}</Typography>
-              <Typography sx={{color: 'text.secondary'}}><LocationOnIcon/> {selectedItem.origin}</Typography>
-              <Typography  sx={{color: 'text.secondary'}}>{selectedItem.info}</Typography>
+              <Typography sx={{ color: 'text.secondary' }}><span style={{ fontWeight: 'bold' }}>Category:</span> {selectedItem.category}</Typography>
+              <Typography sx={{ color: 'text.secondary' }}><LocationOnIcon /> {selectedItem.origin}</Typography>
+              <Typography sx={{ color: 'text.secondary' }}>{selectedItem.info}</Typography>
             </Box>
           )}
         </DialogContent>

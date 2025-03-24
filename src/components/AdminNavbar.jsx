@@ -12,7 +12,7 @@ import {
   Tooltip,
   Avatar
 } from "@mui/material";
-import { UserAuth } from '../../context/AuthContext';
+import { UserAuth } from '../Auth/AuthContext';
 
 export default function AdminNavbar() {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import orchidLogo2 from '../../assets/images/orchid-logo-dall-E-removebg-preview.png';
+import orchidLogo2 from '../assets/orchid-logo-dall-E-removebg-preview.png';
 import { NavLink, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { useThemeContext } from "../../darkmode/ThemeContext";
+import { useThemeContext } from "../darkmode/ThemeContext";
 import {
   AppBar,
   Toolbar,
@@ -23,7 +23,7 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from '@mui/material/styles';
-import { UserAuth } from '../../context/AuthContext';
+import { UserAuth } from '../Auth/AuthContext';
 import { Link } from 'react-router-dom';
 import LoginIcon from '@mui/icons-material/Login';
 
@@ -85,6 +85,7 @@ export default function Navbar() {
   };
   const navItems = [
     { path: '/', label: 'Home' },
+    { path: '/collections', label: 'Collections' },
     { path: '/news', label: 'News' },
     { path: '/about', label: 'About' },
     { path: '/contact', label: 'Contact' }
@@ -241,7 +242,7 @@ export default function Navbar() {
             </Box>
           )}
 
-          <Search sx={{borderRadius: '10px'}}>
+          <Search sx={{ borderRadius: '10px' }}>
             <StyledInputBase
               placeholder="Search orchids..."
               value={searchQuery}

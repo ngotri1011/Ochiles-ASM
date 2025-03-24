@@ -1,16 +1,18 @@
 import { useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import OrchidDetail from "../components/Orchid/OrchidDetail";
-import Contact from "../components/Contact";
-import Orchid from "../components/Orchid/Orchid";
+import OrchidDetail from "../pages/OrchidDetail";
+import Contact from "../pages/Contact";
+import OrchidHome from "../pages/OrchidHome";
 import ProtectedRoutes from "./ProtectedRoutes";
 import AdminLayout from "../layouts/AdminLayout";
-import News from "../components/News";
-import About from "../components/About";
-import ManageOrchid from "../components/Orchid/ManageOrchid";
+import News from "../pages/News";
+import About from "../pages/About";
+import ManageOrchid from "../pages/ManageOrchid";
 import * as React from "react";
-import OrchidAdd from "../components/Orchid/OrchidAdd";
-import OrchidEdit from "../components/Orchid/OrchidEdit";
+import OrchidAdd from "../pages/OrchidAdd";
+import OrchidEdit from "../pages/OrchidEdit";
+import OrchidCollections from "../pages/OrchidCollections";
+import ODCollections from "../pages/ODCollections";
 
 const Routes = () => {
     const routing = useRoutes([
@@ -20,7 +22,7 @@ const Routes = () => {
             children: [
                 {
                     index: true,
-                    element: <Orchid />
+                    element: <OrchidHome />
                 },
                 {
                     path: "detail/:id",
@@ -38,6 +40,14 @@ const Routes = () => {
                     path: "about",
                     element: <About />
                 },
+                {
+                    path: "collections",
+                    element: <OrchidCollections />
+                },
+                {
+                    path: "collections/detail/:id",
+                    element: <ODCollections />
+                }
             ]
         },
         {

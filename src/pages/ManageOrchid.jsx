@@ -26,7 +26,7 @@ import {
 import { Link } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Orchid_URL } from "../../api/OrchidAPI";
+import { Orchid_URL } from "../api/OrchidAPI";
 
 export default function OrchidList() {
   const [orchids, setOrchids] = useState([]);

@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom"
-import AdminNavbar from "../components/navbar/AdminNavbar"
+import AdminNavbar from "../components/AdminNavbar"
 import * as React from "react";
 import { Container } from "@mui/material";
 

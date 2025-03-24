@@ -66,21 +66,21 @@ function Contact() {
             phone: "",
             email: "",
             content: "",
-            major: "",
+            orchid: "",
             agree: false,
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Required.").min(2, "Must be 2 characters or more"),
             email: Yup.string().required("Required.").email("Invalid email"),
             content: Yup.string().required("Required.").min(10, "Must be 10 characters or more"),
-            major: Yup.string().required("Please select an orchid."),
+            orchid: Yup.string().required("Please select an orchid."),
             agree: Yup.boolean().oneOf([true], "The terms and conditions must be accepted."),
         }),
         onSubmit: (values) => {
             // Show success message
             setSnackbar({
                 open: true,
-                message: `Thank you for your interest in ${values.major}! We will contact you soon at ${values.email} to discuss your inquiry.`,
+                message: `Thank you for your interest in ${values.orchid}! We will contact you soon at ${values.email} to discuss your inquiry.`,
                 severity: 'success'
             });
             // Reset form
@@ -165,14 +165,14 @@ function Contact() {
 
                             <FormControl fullWidth sx={{ mb: 3 }}>
                                 <Select
-                                    value={formik.values.major}
+                                    value={formik.values.orchid}
                                     onChange={formik.handleChange}
-                                    name="major"
+                                    name="orchid"
                                     displayEmpty
-                                    error={formik.touched.major && Boolean(formik.errors.major)}
+                                    error={formik.touched.orchid && Boolean(formik.errors.orchid)}
                                     sx={{
                                         '& .MuiOutlinedInput-notchedOutline': {
-                                            borderColor: formik.touched.major && formik.errors.major ? 'error.main' : 'inherit'
+                                            borderColor: formik.touched.orchid && formik.errors.orchid ? 'error.main' : 'inherit'
                                         }
                                     }}
                                 >
@@ -182,9 +182,9 @@ function Contact() {
                                     <MenuItem value="Moonlit Pearl">Moonlit Pearl</MenuItem>
                                     <MenuItem value="Lavender Mist">Lavender Mist</MenuItem>
                                 </Select>
-                                {formik.touched.major && formik.errors.major && (
+                                {formik.touched.orchid && formik.errors.orchid && (
                                     <Typography color="error" variant="caption" sx={{ mt: 1, ml: 2 }}>
-                                        {formik.errors.major}
+                                        {formik.errors.orchid}
                                     </Typography>
                                 )}
                             </FormControl>

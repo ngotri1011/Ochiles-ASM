@@ -11,7 +11,7 @@ import PaletteIcon from '@mui/icons-material/Palette';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import CloseIcon from '@mui/icons-material/Close';
-import { Orchid_URL } from "../../api/OrchidAPI";
+import { Orchid_URL } from "../api/OrchidAPI";
 
 const PageContainer = styled(Container)(({ theme }) => ({
   minHeight: '100vh',

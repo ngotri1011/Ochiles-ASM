@@ -22,7 +22,7 @@ import {
   CircularProgress
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { Orchid_URL } from "../../api/OrchidAPI";
+import { Orchid_URL } from "../api/OrchidAPI";
 
 // List of common orchid origins
 const nationOptions = [
