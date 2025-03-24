@@ -313,7 +313,7 @@ export default function Orchid() {
               backgroundColor: 'primary.main',
             },
           }}
-          autoplay={{ delay: 3000 }}
+          autoplay={{ delay: 5000 }}
           loop={true}
         >
           {heroSlides.map((slide, index) => (
@@ -403,7 +403,11 @@ export default function Orchid() {
         <Grid container spacing={4}>
           {orchids.slice(0, 4).map((orchid) => (
             <Grid item xs={12} sm={6} md={3} key={orchid.id}>
-              <Card sx={{ height: '100%' }}>
+              <Card sx={{ height: '100%', cursor: 'pointer' }}
+              onClick={() => {
+                const allOrchidsSection = document.getElementById('all-orchids');
+                allOrchidsSection?.scrollIntoView({ behavior: 'smooth' });
+              }}>
                 <CardMedia
                   component="img"
                   height="200"

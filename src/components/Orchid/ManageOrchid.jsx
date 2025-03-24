@@ -172,7 +172,7 @@ export default function OrchidList() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ py: 6 }}>
+    <div style={{ marginTop: 100, marginBottom: 50 }}>
       <Box display="flex" justifyContent="flex-end" mb={1}>
         <Button
           component={Link}
@@ -194,11 +194,11 @@ export default function OrchidList() {
               <TableCell>Name</TableCell>
               <TableCell>Rating</TableCell>
               <TableCell>Fragrance</TableCell>
-              <TableCell>Color</TableCell>
+              {/* <TableCell>Color</TableCell> */}
               <TableCell>Origin</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Info</TableCell>
-              <TableCell>Cost</TableCell>
+              {/* <TableCell>Cost</TableCell> */}
               <TableCell>Clip</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
@@ -218,11 +218,11 @@ export default function OrchidList() {
                 <TableCell>{orchid.name}</TableCell>
                 <TableCell>{orchid.rating}</TableCell>
                 <TableCell>{orchid.isFragrance ? "Yes" : "No"}</TableCell>
-                <TableCell>{orchid.color}</TableCell>
+                {/* <TableCell>{orchid.color}</TableCell> */}
                 <TableCell>{orchid.origin}</TableCell>
                 <TableCell>{orchid.category}</TableCell>
                 <TableCell>{orchid.info}</TableCell>
-                <TableCell>${orchid.cost}</TableCell>
+                {/* <TableCell>${orchid.cost}</TableCell> */}
                 <TableCell>
                   {orchid.clip ? (
                     <Box sx={{ width: 150, height: 100 }}>
@@ -361,6 +361,6 @@ export default function OrchidList() {
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Container>
+    </div>
   );
 }

@@ -120,7 +120,7 @@ export default function OrchidAdd() {
         severity: 'success'
       });
       resetForm();
-      navigate("/dashboard");
+      setTimeout(() => navigate("/dashboard"), 1500);
     } catch (error) {
       console.error("Error adding orchid:", error);
       setSnackbar({
@@ -163,101 +163,137 @@ export default function OrchidAdd() {
                 sx={{ mb: 2 }}
               />
 
-              <Box sx={{ mb: 2 }}>
-                <Typography component="legend">Rating</Typography>
-                <Rating
-                  name="rating"
-                  precision={0.5}
-                  value={values.rating}
-                  onChange={(e, newValue) => setFieldValue("rating", newValue)}
+              <Box sx={{
+                mb: 2,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4
+              }}>
+                <Box>
+                  <Typography component="legend">Rating</Typography>
+                  <Rating
+                    name="rating"
+                    precision={0.5}
+                    value={values.rating}
+                    onChange={(e, newValue) => setFieldValue("rating", newValue)}
+                  />
+                  {touched.rating && errors.rating && (
+                    <FormHelperText error>{errors.rating}</FormHelperText>
+                  )}
+                </Box>
+
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={values.isFragrance}
+                      onChange={handleChange}
+                      name="isFragrance"
+                    />
+                  }
+                  label="Is Fragrance"
+                  sx={{
+                    m: 0,
+                    '& .MuiFormControlLabel-label': {
+                      fontWeight: 500
+                    }
+                  }}
                 />
-                {touched.rating && errors.rating && (
-                  <FormHelperText error>{errors.rating}</FormHelperText>
-                )}
+                <FormControl fullWidth error={touched.color && Boolean(errors.color)} sx={{ mb: 2 }}>
+                  <InputLabel>Color</InputLabel>
+                  <Select
+                    name="color"
+                    value={values.color}
+                    label="Color"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  >
+                    <MenuItem value="">Select Color</MenuItem>
+                    <MenuItem value="pink">Pink</MenuItem>
+                    <MenuItem value="yellow">Yellow</MenuItem>
+                    <MenuItem value="white">White</MenuItem>
+                    <MenuItem value="purple">Purple</MenuItem>
+                    <MenuItem value="red">Red</MenuItem>
+                    <MenuItem value="green">Green</MenuItem>
+                    <MenuItem value="blue">Blue</MenuItem>
+                    <MenuItem value="orange">Orange</MenuItem>
+                    <MenuItem value="dark red">Dark Red</MenuItem>
+                  </Select>
+                  {touched.color && errors.color && (
+                    <FormHelperText>{errors.color}</FormHelperText>
+                  )}
+                </FormControl>
               </Box>
 
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={values.isFragrance}
+              <Box sx={{
+                mb: 2,
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: 2
+              }}>
+                <Autocomplete
+                  id="origin"
+                  options={nationOptions}
+                  value={values.origin}
+                  onChange={(event, newValue) => {
+                    setFieldValue("origin", newValue || "");
+                  }}
+                  onInputChange={(event, newInputValue) => {
+                    setFieldValue("origin", newInputValue);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Origin"
+                      error={touched.origin && Boolean(errors.origin)}
+                      helperText={touched.origin && errors.origin}
+                      onBlur={handleBlur}
+                    />
+                  )}
+                  sx={{ flex: 1 }}
+                />
+                {/* <FormControl fullWidth error={touched.origin && Boolean(errors.origin)} sx={{ flex: 1 }}>
+                  <InputLabel id="origin-label">Origin</InputLabel>
+                  <Select
+                    labelId="origin-label"
+                    id="origin"
+                    name="origin"
+                    value={values.origin}
                     onChange={handleChange}
-                    name="isFragrance"
-                  />
-                }
-                label="Is Fragrance"
-                sx={{ mb: 2 }}
-              />
-
-              <FormControl fullWidth error={touched.color && Boolean(errors.color)} sx={{ mb: 2 }}>
-                <InputLabel>Color</InputLabel>
-                <Select
-                  name="color"
-                  value={values.color}
-                  label="Color"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                >
-                  <MenuItem value="">Select Color</MenuItem>
-                  <MenuItem value="pink">Pink</MenuItem>
-                  <MenuItem value="yellow">Yellow</MenuItem>
-                  <MenuItem value="white">White</MenuItem>
-                  <MenuItem value="purple">Purple</MenuItem>
-                  <MenuItem value="red">Red</MenuItem>
-                  <MenuItem value="green">Green</MenuItem>
-                  <MenuItem value="blue">Blue</MenuItem>
-                  <MenuItem value="orange">Orange</MenuItem>
-                  <MenuItem value="dark red">Dark Red</MenuItem>
-                </Select>
-                {touched.color && errors.color && (
-                  <FormHelperText>{errors.color}</FormHelperText>
-                )}
-              </FormControl>
-
-              <Autocomplete
-                id="origin"
-                freeSolo
-                options={nationOptions}
-                value={values.origin}
-                onChange={(event, newValue) => {
-                  setFieldValue("origin", newValue || "");
-                }}
-                onInputChange={(event, newInputValue) => {
-                  setFieldValue("origin", newInputValue);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Origin"
-                    error={touched.origin && Boolean(errors.origin)}
-                    helperText={touched.origin && errors.origin}
                     onBlur={handleBlur}
-                  />
-                )}
-                sx={{ mb: 2 }}
-              />
-
-              <Autocomplete
-                id="category"
-                freeSolo
-                options={categoryOptions}
-                value={values.category}
-                onChange={(event, newValue) => {
-                  setFieldValue("category", newValue || "");
-                }}
-                onInputChange={(event, newInputValue) => {
-                  setFieldValue("category", newInputValue);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Category"
-                    error={touched.category && Boolean(errors.category)}
-                    helperText={touched.category && errors.category}
-                    onBlur={handleBlur}
-                  />
-                )}
-                sx={{ mb: 2 }}
-              />
+                  >
+                    <MenuItem value=""><em>None</em></MenuItem>
+                    {nationOptions.map((nation) => (
+                      <MenuItem key={nation} value={nation}>
+                        {nation}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {touched.origin && errors.origin && (
+                    <FormHelperText>{errors.origin}</FormHelperText>
+                  )}
+                </FormControl> */}
+                <Autocomplete
+                  id="category"
+                  options={categoryOptions}
+                  value={values.category}
+                  onChange={(event, newValue) => {
+                    setFieldValue("category", newValue || "");
+                  }}
+                  onInputChange={(event, newInputValue) => {
+                    setFieldValue("category", newInputValue);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Category"
+                      error={touched.category && Boolean(errors.category)}
+                      helperText={touched.category && errors.category}
+                      onBlur={handleBlur}
+                    />
+                  )}
+                  sx={{ flex: 1 }}
+                />
+              </Box>
 
               <TextField
                 fullWidth
@@ -314,7 +350,7 @@ export default function OrchidAdd() {
                 helperText={touched.clip && errors.clip || "Optional: Add a YouTube video URL"}
                 sx={{ mb: 3 }}
               />
-      
+
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button
                   type="submit"

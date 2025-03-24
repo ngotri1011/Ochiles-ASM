@@ -329,11 +329,17 @@ export default function Detail() {
         maxWidth="md"
         fullWidth
       >
-        <Box sx={{ position: 'relative', bgcolor: 'black' }}>
+        <Box sx={{ 
+          position: 'relative', 
+          bgcolor: 'background.paper',
+          borderRadius: 1,
+          overflow: 'hidden'
+        }}>
           <DialogTitle sx={{
-            color: 'white',
             p: 2,
             pr: 6,
+            borderBottom: 1,
+            borderColor: 'divider',
             '& .MuiTypography-root': {
               fontSize: '1.5rem',
               fontWeight: 500
@@ -341,19 +347,12 @@ export default function Detail() {
           }}>
             Video for {orchid?.name}
           </DialogTitle>
-          <IconButton
-            onClick={() => setVideoOpen(false)}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-              color: 'white',
-              zIndex: 1,
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-          <Box sx={{ width: '100%', pt: '56.25%', position: 'relative' }}>
+          <Box sx={{ 
+            width: '100%', 
+            pt: '56.25%', 
+            position: 'relative',
+            bgcolor: 'black'
+          }}>
             <Box
               component="iframe"
               src={getYouTubeEmbedUrl(orchid?.clip)}
@@ -370,6 +369,29 @@ export default function Detail() {
                 border: 'none',
               }}
             />
+          </Box>
+          <Box sx={{ 
+            p: 2, 
+            display: 'flex', 
+            justifyContent: 'flex-end',
+            borderTop: 1,
+            borderColor: 'divider'
+          }}>
+            <Button
+              variant="outlined"
+              onClick={() => setVideoOpen(false)}
+              startIcon={<CloseIcon />}
+              sx={{
+                textTransform: 'none',
+                borderRadius: 2,
+                px: 3,
+                '&:hover': {
+                  backgroundColor: 'action.hover',
+                }
+              }}
+            >
+              Close
+            </Button>
           </Box>
         </Box>
       </Dialog>
