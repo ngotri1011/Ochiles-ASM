@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import orchidLogo2 from '../assets/orchid-logo-dall-E-removebg-preview.png';
 import { NavLink, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useThemeContext } from "../darkmode/ThemeContext";
@@ -25,7 +25,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from '@mui/material/styles';
 import { UserAuth } from '../Auth/AuthContext';
 import { Link } from 'react-router-dom';
-import LoginIcon from '@mui/icons-material/Login';
+import GoogleIcon from '@mui/icons-material/Google';
 
 const pages = ['Home', 'News', 'About', 'Contact', 'List'];
 const Search = styled('div')(({ theme }) => ({
@@ -93,6 +93,7 @@ export default function Navbar() {
   const handleSignOut = async () => {
     try {
       await logOut()
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -296,26 +297,31 @@ export default function Navbar() {
                     <Typography textAlign="center" ><Link to='/dashboard' style={{ textDecoration: "none" }}>Dashboard</Link></Typography>
                   </MenuItem>
                   <MenuItem>
+                    <Typography textAlign="center" ><Link to='/profile' style={{ textDecoration: "none" }} > User Info</Link></Typography>
+                  </MenuItem>
+                  <MenuItem>
                     <Typography textAlign="center" onClick={handleSignOut}>Logout</Typography>
                   </MenuItem>
                 </Menu>
               </div>
             ) : (
-              <Button
-                startIcon={<LoginIcon />}
-                onClick={handleGoogleSignIn}
-                sx={{
-                  borderRadius: '10px',
-                  textTransform: 'none',
-                  px: 2,
-                  py: 1,
-                  '&:hover': {
-                    borderColor: '#d2e3fc',
-                    backgroundColor: '#f8f9fa'
-                  }
-                }}
-              >
-              </Button>
+              <Tooltip title="Login with Google">
+                <Button
+                  startIcon={<GoogleIcon />}
+                  onClick={handleGoogleSignIn}
+                  sx={{
+                    borderRadius: '10px',
+                    textTransform: 'none',
+                    px: 2,
+                    py: 1,
+                    '&:hover': {
+                      borderColor: '#d2e3fc',
+                      backgroundColor: '#f8f9fa'
+                    }
+                  }}
+                >
+                </Button>
+              </Tooltip>
             )}
           </Box>
         </Toolbar>

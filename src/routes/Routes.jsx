@@ -13,6 +13,7 @@ import OrchidAdd from "../pages/OrchidAdd";
 import OrchidEdit from "../pages/OrchidEdit";
 import OrchidCollections from "../pages/OrchidCollections";
 import ODCollections from "../pages/ODCollections";
+import ProfileSettings from "../pages/ProfileSettings";
 
 const Routes = () => {
     const routing = useRoutes([
@@ -47,6 +48,10 @@ const Routes = () => {
                 {
                     path: "collections/detail/:id",
                     element: <ODCollections />
+                },
+                {
+                    path: "profile",
+                    element: <ProfileSettings />
                 }
             ]
         },
@@ -68,7 +73,8 @@ const Routes = () => {
                         {
                             path: "edit/:id",
                             element: <OrchidEdit />
-                        }
+                        },
+                        
                     ]
                 }
             ]

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -93,6 +93,9 @@ export default function AdminNavbar() {
             >
               <MenuItem onClick={handleHomeClick}>
                 <Typography textAlign="center">Home</Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography textAlign="center" ><Link to='/profile' style={{ textDecoration: "none" }} > User Info</Link></Typography>
               </MenuItem>
               <MenuItem onClick={handleSignOut}>
                 <Typography textAlign="center">Logout</Typography>
