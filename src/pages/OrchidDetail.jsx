@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import { Box, Button, Rating, Typography, Paper, Container, CircularProgress, Dialog, IconButton, DialogTitle, Tabs, Tab, TextField } from "@mui/material";
+import { Box, Button, Rating, Typography, Paper, Container, CircularProgress, Dialog, IconButton, DialogTitle, Tabs, Tab, TextField, Avatar } from "@mui/material";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -12,6 +12,10 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import { Orchid_URL } from "../api/OrchidAPI";
+import { useFormik } from "formik";
+import * as Yup from 'yup';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const PageContainer = styled(Container)(({ theme }) => ({
   minHeight: '100vh',
@@ -177,7 +181,7 @@ export default function Detail() {
   const [error, setError] = useState(null);
   const [videoOpen, setVideoOpen] = useState(false);
   const [value, setValue] = useState(0);
-  const [feedback, setFeedback] = useState('');
+  const [userFeedback, setUserFeedback] = useState(null);
 
   useEffect(() => {
     const fetchOrchidDetail = async () => {
@@ -188,6 +192,9 @@ export default function Detail() {
         }
         const data = await response.json();
         setOrchid(data);
+        // Assuming each user can only submit one feedback, find user's feedback
+        const existingFeedback = data.feedback?.find(fb => fb.author === "user@example.com"); // Replace with actual user email
+        setUserFeedback(existingFeedback);
       } catch (error) {
         console.error("Failed to fetch orchid details:", error);
         setError(error.message);
@@ -198,6 +205,72 @@ export default function Detail() {
 
     fetchOrchidDetail();
   }, [id]);
+
+  const handleSubmitFeedback = async (values) => {
+    const newFeedback = {
+      rating: values.rating,
+      comment: values.comment,
+      author: values.email,
+      date: new Date().toISOString(),
+      avatar: "https://lh3.googleusercontent.com/a-/user-avatar.jpg", // Placeholder, replace with actual Google avatar
+    };
+
+    try {
+      const updatedOrchid = {
+        ...orchid,
+        feedback: [...(orchid.feedback || []), newFeedback],
+      };
+
+      const response = await fetch(`${Orchid_URL}/${id}`, {
+        method: 'PUT', // Assuming backend accepts PUT to update orchid
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedOrchid),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+
+      setOrchid(updatedOrchid);
+      setUserFeedback(newFeedback);
+    } catch (error) {
+      alert('Failed to submit feedback. Please try again.');
+    }
+  };
+
+  const handleDeleteFeedback = async () => {
+    try {
+      const updatedFeedback = orchid.feedback.filter(fb => fb.author !== "user@example.com");
+      const updatedOrchid = { ...orchid, feedback: updatedFeedback };
+
+      await fetch(`${Orchid_URL}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedOrchid),
+      });
+
+      setOrchid(updatedOrchid);
+      setUserFeedback(null);
+    } catch (error) {
+      alert('Failed to delete feedback.');
+    }
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      rating: 0,
+      comment: '',
+      email: '',
+    },
+    validationSchema: Yup.object({
+      rating: Yup.number().min(1, 'Rating is required').required('Rating is required'),
+      comment: Yup.string().min(10, 'Comment must be at least 10 characters').required('Comment is required'),
+      email: Yup.string().email('Invalid email format').required('Email is required'),
+    }),
+    onSubmit: handleSubmitFeedback,
+  });
 
   if (loading) return (
     <PageContainer>
@@ -219,6 +292,10 @@ export default function Detail() {
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const handleRatingChange = (_, value) => {
+    formik.setFieldValue('rating', value || 0);
   };
 
   return (
@@ -287,8 +364,8 @@ export default function Detail() {
 
               <InfoRow>
                 <Typography variant="subtitle1">
-                  Fragrance: {' '}
-                  {orchid.isFragrance ? (
+                  Featured: {' '}
+                  {orchid.isFeatured ? (
                     <CheckCircleIcon sx={{ color: "green", verticalAlign: 'middle' }} />
                   ) : (
                     <CancelIcon sx={{ color: "red", verticalAlign: 'middle' }} />
@@ -338,19 +415,77 @@ export default function Detail() {
 
           {/* Feedback Tab Content */}
           {value === 1 && (
-            <Box sx={{ p: 2 }}>
-              <Typography variant="h6" gutterBottom>
-                Leave your feedback:
-              </Typography>
-              <TextField
-                fullWidth
-                multiline
-                rows={4}
-                value={feedback}
-                onChange={(e) => setFeedback(e.target.value)}
-                placeholder="Share your thoughts..."
-                variant="outlined"
-              />
+            <Box sx={{ p: 2, borderRadius: 2, maxWidth: 400, mx: 'auto' }}>
+              {userFeedback ? (
+
+                <Paper sx={{ p: 2, mt: 2 }}>
+                  <Box display="flex" alignItems="center" gap={2}>
+                    <Avatar src={userFeedback.avatar} />
+                    <Typography variant="subtitle1">{userFeedback.author}</Typography>
+                  </Box>
+                  <Rating value={userFeedback.rating} readOnly />
+                  <Typography>{userFeedback.comment}</Typography>
+                  <Typography variant="caption" color="textSecondary">{new Date(userFeedback.date).toLocaleString()}</Typography>
+                  <Box display="flex" gap={1} mt={1}>
+                    <IconButton color="primary" onClick={() => setUserFeedback(null)}><EditIcon /></IconButton>
+                    <IconButton color="error" onClick={handleDeleteFeedback}><DeleteIcon /></IconButton>
+                  </Box>
+                </Paper>
+
+              ) : (
+                <Box sx={{ p: 2, mt: 2 }}>
+                  <Typography variant="h4" gutterBottom>
+                    Give your feedback:
+                  </Typography>
+                  <form onSubmit={formik.handleSubmit}>
+                    <Rating
+                      name="rating"
+                      value={formik.values.rating}
+                      onChange={handleRatingChange}
+                    />
+                    {formik.touched.rating && formik.errors.rating && (
+                      <Typography color="error" variant="body2">{formik.errors.rating}</Typography>
+                    )}
+
+                    <TextField
+                      fullWidth
+                      margin="normal"
+                      name="email"
+                      type="email"
+                      label="Email"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={formik.touched.email && Boolean(formik.errors.email)}
+                      helperText={formik.touched.email && formik.errors.email}
+                    />
+
+                    <TextField
+                      fullWidth
+                      multiline
+                      rows={4}
+                      margin="normal"
+                      name="comment"
+                      label="Comment"
+                      value={formik.values.comment}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={formik.touched.comment && Boolean(formik.errors.comment)}
+                      helperText={formik.touched.comment && formik.errors.comment}
+                    />
+
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      sx={{ mt: 2 }}
+                    >
+                      Submit
+                    </Button>
+                  </form>
+                </Box>
+              )}
             </Box>
           )}
         </DetailsContainer>
