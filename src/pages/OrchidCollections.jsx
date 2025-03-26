@@ -245,7 +245,23 @@ export default function Orchid() {
 
         <Box sx={{ display: "flex" }}>
             {/* Filter Section */}
-            <Box sx={{ width: "900px", height: "100vh", p: 2, my: 15,ml:3, backgroundColor: "background.paper", position: "sticky", top: "0", overflowY: "auto",borderRadius:"8px" }}>
+            <Box
+                sx={{
+                    width: 300, // Fixed width for stability
+                    minWidth: 300,
+                    maxWidth: 300,
+                    height: "100vh",
+                    p: 2,
+                    my: 15,
+                    ml: 3,
+                    backgroundColor: "background.paper",
+                    position: "sticky",
+                    top: 0,
+                    overflowY: "auto",
+                    borderRadius: "8px",
+                    boxSizing: "border-box",
+                }}
+            >
                 <Typography variant="h6">Sort By</Typography>
                 <Select value={sortOption} onChange={handleSortChange} fullWidth>
                     <MenuItem value="All">All</MenuItem>
@@ -266,7 +282,7 @@ export default function Orchid() {
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography variant="h6">Categories</Typography>
                     </AccordionSummary>
-                    <AccordionDetails  sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                    <AccordionDetails sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
                         {categories.map((category) => (
                             <FormControlLabel
                                 key={category}
@@ -284,7 +300,7 @@ export default function Orchid() {
                 </Accordion>
             </Box>
             {/* orchid grid section */}
-            <Box sx={{ mt: 15, ml: 3 }} id="all-orchids">
+            <Box sx={{ flexGrow: 1,mt: 15, ml: 3 }} id="all-orchids">
                 <SectionTitle variant="h3">All Orchids</SectionTitle>
                 <Grid container spacing={2} sx={{ mt: 4, mb: 4 }}>
                     {filteredOrchids && filteredOrchids.length > 0 ? (
