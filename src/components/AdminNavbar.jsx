@@ -55,7 +55,7 @@ export default function AdminNavbar() {
             variant="h6"
             noWrap
             component={NavLink}
-            to="/dashboard"
+            to="/orchid"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -64,7 +64,7 @@ export default function AdminNavbar() {
               textDecoration: 'none',
             }}
           >
-            Dashboard
+            Orchid Management
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />

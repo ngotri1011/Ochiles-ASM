@@ -294,7 +294,10 @@ export default function Navbar() {
                   onClose={handleCloseUserMenu}
                 >
                   <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center" ><Link to='/dashboard' style={{ textDecoration: "none" }}>Dashboard</Link></Typography>
+                    <Typography textAlign="center" ><Link to='/orchid' style={{ textDecoration: "none"}}>Orchid Admin</Link></Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center" ><Link to='/category' style={{ textDecoration: "none"}}>Category Admin</Link></Typography>
                   </MenuItem>
                   <MenuItem>
                     <Typography textAlign="center" ><Link to='/profile' style={{ textDecoration: "none" }} > User Info</Link></Typography>

@@ -19,7 +19,9 @@ import {
   Autocomplete,
   Snackbar,
   Alert,
-  CircularProgress
+  CircularProgress,
+  ToggleButtonGroup,
+  ToggleButton
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { Orchid_URL } from "../api/OrchidAPI";
@@ -97,7 +99,9 @@ export default function OrchidEdit() {
     id: orchid?.id || "",
     name: orchid?.name || "",
     rating: orchid?.rating || 0,
-    isFragrance: orchid?.isFragrance || false,
+    isFeatured: orchid?.isFeatured || false,
+    isSpecies: orchid?.isSpecies || false,
+    isHybrid: orchid?.isHybrid || false,
     image: orchid?.image || "",
     color: orchid?.color || "",
     origin: orchid?.origin || "",
@@ -145,7 +149,7 @@ export default function OrchidEdit() {
         message: 'Orchid updated successfully!',
         severity: 'success'
       });
-      setTimeout(() => navigate("/dashboard"), 1500);
+      setTimeout(() => navigate("/orchid"), 1500);
     } catch (error) {
       console.error("Error updating orchid:", error);
       setSnackbar({
@@ -221,12 +225,12 @@ export default function OrchidEdit() {
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={values.isFragrance}
+                      checked={values.isFeatured}
                       onChange={handleChange}
-                      name="isFragrance"
+                      name="isFeatured"
                     />
                   }
-                  label="Is Fragrance"
+                  label="Is Featured"
                   sx={{
                     m: 0,
                     '& .MuiFormControlLabel-label': {
@@ -234,7 +238,24 @@ export default function OrchidEdit() {
                     }
                   }}
                 />
-                <FormControl fullWidth error={touched.color && Boolean(errors.color)} sx={{ mb: 2 }}>
+
+                <FormControl>
+                  <ToggleButtonGroup
+                    value={values.isSpecies ? "species" : "hybrid"}
+                    exclusive
+                    onChange={(_, newValue) => {
+                      if (newValue) {
+                        setFieldValue("isSpecies", newValue === "species");
+                        setFieldValue("isHybrid", newValue === "hybrid");
+                      }
+                    }}
+                  >
+                    <ToggleButton value="species">Is Species</ToggleButton>
+                    <ToggleButton value="hybrid">Is Hybrid</ToggleButton>
+                  </ToggleButtonGroup>
+                </FormControl>
+
+                <FormControl fullWidth error={touched.color && Boolean(errors.color)} sx={{ mb: 2, width: 200 }}>
                   <InputLabel>Color</InputLabel>
                   <Select
                     name="color"
@@ -260,7 +281,7 @@ export default function OrchidEdit() {
                 </FormControl>
               </Box>
 
-              <Box sx={{ 
+              <Box sx={{
                 mb: 2,
                 display: 'flex',
                 alignItems: 'flex-start',
@@ -377,7 +398,7 @@ export default function OrchidEdit() {
                 </Button>
                 <Button
                   variant="outlined"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => navigate("/orchid")}
                 >
                   Back
                 </Button>

@@ -14,6 +14,9 @@ import OrchidEdit from "../pages/OrchidEdit";
 import OrchidCollections from "../pages/OrchidCollections";
 import ODCollections from "../pages/ODCollections";
 import ProfileSettings from "../pages/ProfileSettings";
+import GetOrchidById from "../pages/GetOrchidById";
+import CategoryManagement from "../pages/CategoryManagement";
+import CategoryAdd from "../pages/CategoryAdd";
 
 const Routes = () => {
     const routing = useRoutes([
@@ -56,7 +59,7 @@ const Routes = () => {
             ]
         },
         {
-            path: "dashboard",
+            path: "orchid",
             element: <ProtectedRoutes />,
             children: [
                 {
@@ -73,6 +76,38 @@ const Routes = () => {
                         {
                             path: "edit/:id",
                             element: <OrchidEdit />
+                        },
+                        {
+                            path: "getOCById",
+                            element: <GetOrchidById />
+                        }
+                        
+                    ]
+                }
+            ]
+        },
+        {
+            path: "category",
+            element: <ProtectedRoutes />,
+            children: [
+                {
+                    element: <AdminLayout />,
+                    children: [
+                        {
+                            index: true,
+                            element: <CategoryManagement />
+                        },
+                        {
+                            path: "add",
+                            element: <CategoryAdd />
+                        },
+                        {
+                            path: "edit/:id",
+                            // element: <CategoryEdit />
+                        },
+                        {
+                            path: "categoryId",
+                            // element: <CategoryId />
                         }
                         
                     ]

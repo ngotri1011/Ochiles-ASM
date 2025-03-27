@@ -18,7 +18,9 @@ import {
   Paper,
   Autocomplete,
   Snackbar,
-  Alert
+  Alert,
+  ToggleButtonGroup,
+  ToggleButton
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Orchid_URL } from "../api/OrchidAPI";
@@ -69,9 +71,12 @@ export default function OrchidAdd() {
   };
 
   const initialValues = {
+    id: "",
     name: "",
     rating: 0,
-    isFragrance: false,
+    isFeatured: false,
+    isSpecies: false,
+    isHybrid: false,
     image: "",
     color: "",
     origin: "",
@@ -82,9 +87,10 @@ export default function OrchidAdd() {
   };
 
   const validationSchema = Yup.object({
+    id: Yup.string().required("ID is required"),
     name: Yup.string().required("Name is required"),
     rating: Yup.number()
-      .min(0, "Minimum rating is 0")
+      .min(1, "Minimum rating is 1")
       .max(5, "Maximum rating is 5")
       .required("Rating is required"),
     image: Yup.string().url("Must be a valid URL").required("Image is required"),
@@ -94,7 +100,14 @@ export default function OrchidAdd() {
     info: Yup.string().required("Info is required"),
     cost: Yup.number().min(0, "Cost must be at least 0").required("Cost is required"),
     clip: Yup.string().url("Must be a valid URL").nullable(),
-  });
+    // Ensuring at least one of isSpecies or isHybrid is true
+    isSpecies: Yup.boolean(),
+    isHybrid: Yup.boolean(),
+  }).test(
+    "isSpecies-or-isHybrid",
+    "Either 'Is Species' or 'Is Hybrid' must be selected (but not both)",
+    (values) => (values.isSpecies || values.isHybrid) && !(values.isSpecies && values.isHybrid)
+  );
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
@@ -120,7 +133,7 @@ export default function OrchidAdd() {
         severity: 'success'
       });
       resetForm();
-      setTimeout(() => navigate("/dashboard"), 1500);
+      setTimeout(() => navigate("/orchid"), 1500);
     } catch (error) {
       console.error("Error adding orchid:", error);
       setSnackbar({
@@ -152,6 +165,18 @@ export default function OrchidAdd() {
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <TextField
                 fullWidth
+                id="id"
+                name="id"
+                label="ID"
+                value={values.id}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.id && Boolean(errors.id)}
+                helperText={touched.id && errors.id}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                fullWidth
                 id="name"
                 name="name"
                 label="Name"
@@ -173,7 +198,6 @@ export default function OrchidAdd() {
                   <Typography component="legend">Rating</Typography>
                   <Rating
                     name="rating"
-                    precision={0.5}
                     value={values.rating}
                     onChange={(e, newValue) => setFieldValue("rating", newValue)}
                   />
@@ -185,12 +209,12 @@ export default function OrchidAdd() {
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={values.isFragrance}
+                      checked={values.isFeatured}
                       onChange={handleChange}
-                      name="isFragrance"
+                      name="isFeatured"
                     />
                   }
-                  label="Is Fragrance"
+                  label="Is Featured"
                   sx={{
                     m: 0,
                     '& .MuiFormControlLabel-label': {
@@ -198,7 +222,28 @@ export default function OrchidAdd() {
                     }
                   }}
                 />
-                <FormControl fullWidth error={touched.color && Boolean(errors.color)} sx={{ mb: 2 }}>
+
+                <FormControl>
+                  <ToggleButtonGroup
+                    value={values.isSpecies ? "species" : "hybrid"}
+                    exclusive
+                    onChange={(_, newValue) => {
+                      if (newValue) {
+                        setFieldValue("isSpecies", newValue === "species");
+                        setFieldValue("isHybrid", newValue === "hybrid");
+                      }
+                    }}
+                  >
+                    <ToggleButton value="species">Is Species</ToggleButton>
+                    <ToggleButton value="hybrid">Is Hybrid</ToggleButton>
+                  </ToggleButtonGroup>
+
+                  {(touched.isSpecies && errors.isSpecies) || (touched.isHybrid && errors.isHybrid) ? (
+                    <FormHelperText error>{errors.isSpecies || errors.isHybrid}</FormHelperText>
+                  ) : null}
+                </FormControl>
+
+                <FormControl fullWidth error={touched.color && Boolean(errors.color)} sx={{ mb: 2, width: 200 }}>
                   <InputLabel>Color</InputLabel>
                   <Select
                     name="color"
@@ -361,7 +406,7 @@ export default function OrchidAdd() {
                 </Button>
                 <Button
                   variant="outlined"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => navigate("/orchid")}
                 >
                   Back
                 </Button>

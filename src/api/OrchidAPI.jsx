@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "https://67cc1caf3395520e6af72e9c.mockapi.io/fer202/v1/Assignment";
-
+const BASE_URL = "https://67cc1caf3395520e6af72e9c.mockapi.io/fer202/v1/Orchid";
+export const category_url = "https://67cc1caf3395520e6af72e9c.mockapi.io/fer202/v1/Category";
 // Axios methods
 export const OrchidAPI = {
   getAll: () => axios.get(BASE_URL),

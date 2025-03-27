@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { 
-  Container, 
-  Button, 
-  Box, 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableContainer, 
-  TableHead, 
-  TableRow, 
-  Paper, 
-  Typography, 
+import {
+  Container,
+  Button,
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
   Pagination,
   CircularProgress,
   Dialog,
@@ -21,12 +21,14 @@ import {
   Snackbar,
   Alert,
   IconButton,
-  Tooltip
+  Tooltip,
+  TextField
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Orchid_URL } from "../api/OrchidAPI";
+import axios from "axios";
 
 export default function OrchidList() {
   const [orchids, setOrchids] = useState([]);
@@ -35,6 +37,8 @@ export default function OrchidList() {
   const numRowsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedData, setPaginatedData] = useState([]);
+  const [searchId, setSearchId] = useState("");
+
   const [deleteDialog, setDeleteDialog] = useState({
     open: false,
     orchidId: null
@@ -147,11 +151,11 @@ export default function OrchidList() {
 
   if (loading) {
     return (
-      <Box sx={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '100vh' 
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh'
       }}>
         <CircularProgress size={60} />
       </Box>
@@ -160,30 +164,53 @@ export default function OrchidList() {
 
   if (error) {
     return (
-      <Box sx={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '50vh' 
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '50vh'
       }}>
         <Typography color="error" variant="h6">Error: {error}</Typography>
       </Box>
     );
   }
 
+  const handleSearch = () => {
+      if (searchId) {
+        setOrchids((prev) => prev.filter((orc) => orc.id === searchId));
+      } else {
+        axios.get(Orchid_URL).then((response) => {
+          setOrchids(response.data);
+        });
+      }
+    };
+
   return (
     <div style={{ marginTop: 100, marginBottom: 50 }}>
-      <Box display="flex" justifyContent="flex-end" mb={1}>
+      <Box display="flex" justifyContent="space-between" mb={1}>
         <Button
           component={Link}
-          to="/dashboard/add"
+          to="/orchid/add"
           variant="contained"
           color="primary"
           sx={{ textTransform: 'none' }}
         >
           Add new Orchid
         </Button>
+        <Box display="flex" gap={1}>
+          <TextField
+            label="Search by ID"
+            variant="outlined"
+            size="small"
+            value={searchId}
+            onChange={(e) => setSearchId(e.target.value)}
+          />
+          <Button variant="contained" onClick={handleSearch}>
+            Search
+          </Button>
+        </Box>
       </Box>
+
 
       <TableContainer component={Paper} elevation={3}>
         <Table sx={{ maxWidth: 1300 }} aria-label="simple table">
@@ -193,12 +220,10 @@ export default function OrchidList() {
               <TableCell>Image</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Rating</TableCell>
-              <TableCell>Fragrance</TableCell>
-              {/* <TableCell>Color</TableCell> */}
+              <TableCell>IsFeatured</TableCell>
               <TableCell>Origin</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Info</TableCell>
-              {/* <TableCell>Cost</TableCell> */}
               <TableCell>Clip</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
@@ -217,12 +242,10 @@ export default function OrchidList() {
                 </TableCell>
                 <TableCell>{orchid.name}</TableCell>
                 <TableCell>{orchid.rating}</TableCell>
-                <TableCell>{orchid.isFragrance ? "Yes" : "No"}</TableCell>
-                {/* <TableCell>{orchid.color}</TableCell> */}
+                <TableCell>{orchid.isFeatured ? "Yes" : "No"}</TableCell>
                 <TableCell>{orchid.origin}</TableCell>
                 <TableCell>{orchid.category}</TableCell>
                 <TableCell>{orchid.info}</TableCell>
-                {/* <TableCell>${orchid.cost}</TableCell> */}
                 <TableCell>
                   {orchid.clip ? (
                     <Box sx={{ width: 150, height: 100 }}>
@@ -286,7 +309,7 @@ export default function OrchidList() {
                   <Box sx={{ display: 'flex', gap: 1 }}>
                     <Button
                       component={Link}
-                      to={`/dashboard/edit/${orchid.id}`}
+                      to={`/orchid/edit/${orchid.id}`}
                       variant="contained"
                       color="primary"
                       size="small"
@@ -352,8 +375,8 @@ export default function OrchidList() {
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <Alert 
-          onClose={handleCloseSnackbar} 
+        <Alert
+          onClose={handleCloseSnackbar}
           severity={snackbar.severity}
           variant="filled"
           sx={{ width: '100%' }}

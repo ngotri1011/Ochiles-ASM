@@ -234,7 +234,7 @@ export default function Detail() {
           </Link>
         </BackButtonContainer>
 
-        {orchid.isFragrance && (
+        {orchid.isFeatured && (
           <RibbonContainer>
             <Ribbon>Fragrance</Ribbon>
           </RibbonContainer>
@@ -274,7 +274,7 @@ export default function Detail() {
           <InfoRow>
             <Typography variant="subtitle1">
               Fragrance: {' '}
-              {orchid.isFragrance ? (
+              {orchid.isFeatured ? (
                 <CheckCircleIcon sx={{ color: "green", verticalAlign: 'middle' }} />
               ) : (
                 <CancelIcon sx={{ color: "red", verticalAlign: 'middle' }} />

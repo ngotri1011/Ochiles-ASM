@@ -212,7 +212,7 @@ export default function Detail() {
       comment: values.comment,
       author: values.email,
       date: new Date().toISOString(),
-      avatar: "https://lh3.googleusercontent.com/a-/user-avatar.jpg", // Placeholder, replace with actual Google avatar
+      // avatar: "https://lh3.googleusercontent.com/a-/user-avatar.jpg", // Placeholder, replace with actual Google avatar
     };
 
     try {
@@ -438,6 +438,7 @@ export default function Detail() {
                     Give your feedback:
                   </Typography>
                   <form onSubmit={formik.handleSubmit}>
+                    <Typography>Rating:</Typography>
                     <Rating
                       name="rating"
                       value={formik.values.rating}
