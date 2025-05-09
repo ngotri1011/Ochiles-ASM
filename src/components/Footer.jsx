@@ -14,7 +14,8 @@ const Footer = () => {
         color: 'text.primary',
         py: 6,
         borderTop: 1,
-        borderColor: 'divider'
+        borderColor: 'divider',
+        mt: 4,
       }}
     >
       <Container maxWidth="lg">
