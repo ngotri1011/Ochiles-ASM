@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import { Box, Button, Rating, Typography, Paper, Container, CircularProgress, Dialog, IconButton, DialogTitle, Tabs, Tab, TextField, Avatar } from "@mui/material";
+import {
+  Box, Button, Rating, Typography, Paper, Container, CircularProgress,
+  Dialog, IconButton, DialogTitle, Tabs, Tab, TextField, Avatar
+} from "@mui/material";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -16,6 +19,14 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import QuantitySelector from "../components/QuantitySelector";
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+
+const ControlContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+}));
 
 const PageContainer = styled(Container)(({ theme }) => ({
   minHeight: '100vh',
@@ -23,7 +34,7 @@ const PageContainer = styled(Container)(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   padding: theme.spacing(4),
-  marginTop: theme.spacing(10),
+  marginTop: theme.spacing(15),
 }));
 
 const DetailCard = styled(Paper)(({ theme }) => ({
@@ -38,9 +49,6 @@ const DetailCard = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
   transition: 'transform 0.3s ease-in-out',
-  '&:hover': {
-    transform: 'translateY(-5px)',
-  },
   [theme.breakpoints.down('md')]: {
     flexDirection: 'column',
     minHeight: 'auto',
@@ -182,6 +190,7 @@ export default function Detail() {
   const [videoOpen, setVideoOpen] = useState(false);
   const [value, setValue] = useState(0);
   const [userFeedback, setUserFeedback] = useState(null);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchOrchidDetail = async () => {
@@ -404,7 +413,6 @@ export default function Detail() {
                   value={orchid.rating}
                   readOnly
                   precision={0.5}
-                  sx={{ color: 'primary.main' }}
                 />
                 <Typography variant="body2" color="text.secondary">
                   ({orchid.rating}/5)
@@ -489,6 +497,18 @@ export default function Detail() {
               )}
             </Box>
           )}
+          <ControlContainer>
+            <QuantitySelector quantity={quantity} setQuantity={setQuantity}/>
+            <Button
+              sx={{ backgroundColor: 'primary.main', color: 'background.default', borderRadius: 2, px: 3,width: '100%', mx: 2 }}
+            >
+              Add to Cart
+            </Button>
+            <Button sx={{backgroundColor:'background.default', color: 'text.primary',mx: 2, px:6}}>
+              <BookmarkBorderIcon />
+              <Typography> Wishlist</Typography>
+            </Button>
+          </ControlContainer>
         </DetailsContainer>
       </DetailCard>
       {/* Video Modal */}
