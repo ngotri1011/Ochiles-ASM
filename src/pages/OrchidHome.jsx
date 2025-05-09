@@ -228,7 +228,6 @@ export default function Orchid() {
   // Calculate pagination
   const handlePageChange = (event, value) => {
     setPage(value);
-    // window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const startIndex = (page - 1) * itemsPerPage;
@@ -462,7 +461,7 @@ export default function Orchid() {
         </Container>
       </Box>
 
-      {/* Existing Orchid Grid Section */}
+      {/* Orchid Grid Section */}
       <Box sx={{ mt: 15, ml: 3 }} id="all-orchids">
         <SectionTitle variant="h3">
           All Orchids
@@ -519,6 +518,7 @@ export default function Orchid() {
                       <PreviewText variant="h6">Click to Preview</PreviewText>
                     </ImageOverlay>
                   </CardMedia>
+
                   <CardContent sx={{
                     p: 2,
                     display: 'flex',
@@ -526,40 +526,43 @@ export default function Orchid() {
                     gap: 0.75,
                     height: '150px'
                   }}>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold', lineHeight: 0.9 }}>{item.name}</Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 0.9 }}>${item.cost}</Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, }}>
-                      <Rating
-                        name="half-rating-read"
-                        defaultValue={2.5}
-                        precision={0.5}
-                        value={item.rating}
-                        readOnly
-                        sx={{ color: 'primary.main' }}
-                      />
-                      <Typography color="text.secondary" sx={{ lineHeight: 0.5 }}>({item.rating}/5)</Typography>
-                    </Box>
                     <Link
                       to={`/detail/${item.id}`}
                       style={{ textDecoration: 'none' }}
                       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     >
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{
-                          borderRadius: 1,
-                          width: '100%',
-                          height: 36,
-                          fontSize: '14px',
-                          p: '4px',
-                          textTransform: 'none'
-                        }}
-                      >
-                        View Details <ArrowForwardIcon fontSize="small" />
-                      </Button>
+                      <Box>
+                        <Typography variant="h6" sx={{ fontWeight: 'bold', lineHeight: 0.9 }}>{item.name}</Typography>
+                        <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.9rem', mt: 1 }}>${item.cost}</Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, }}>
+                          <Rating
+                            name="half-rating-read"
+                            defaultValue={2.5}
+                            precision={0.5}
+                            value={item.rating}
+                            readOnly
+                          />
+                          <Typography color="text.secondary" sx={{ lineHeight: 0.5 }}>({item.rating}/5)</Typography>
+                        </Box>
+                      </Box>
                     </Link>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      sx={{
+                        borderRadius: 1,
+                        width: '100%',
+                        height: 36,
+                        fontSize: '14px',
+                        p: '4px',
+                        textTransform: 'none',
+                        mt: 5,
+                      }}
+                    >
+                      Add to cart <ArrowForwardIcon fontSize="small" />
+                    </Button>
                   </CardContent>
+
                 </Card>
               </Grid>
             ))
@@ -635,6 +638,6 @@ export default function Orchid() {
           <Button onClick={() => setSelectedItem(null)}>Close</Button>
         </DialogActions>
       </Dialog>
-    </Box>
+    </Box >
   );
 }
