@@ -1,3 +1,4 @@
+// Orchid Detail Collections
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
