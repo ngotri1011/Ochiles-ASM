@@ -43,7 +43,7 @@ const DetailCard = styled(Paper)(({ theme }) => ({
   width: '100%',
   maxWidth: '1200px',
   minHeight: '600px',
-  borderRadius: '20px',
+  borderRadius: '10px',
   overflow: 'visible',
   flexDirection: 'row',
   backgroundColor: theme.palette.background.paper,
@@ -106,8 +106,8 @@ const Ribbon = styled("div")`
 const ImageContainer = styled(Box)(({ theme }) => ({
   flex: 1,
   overflow: 'hidden',
-  borderTopLeftRadius: '20px',
-  borderBottomLeftRadius: '20px',
+  borderTopLeftRadius: '10px',
+  borderBottomLeftRadius: '10px',
   position: 'relative',
   [theme.breakpoints.down('md')]: {
     borderRadius: '20px 20px 0 0',
@@ -316,7 +316,7 @@ export default function Detail() {
               variant="contained"
               startIcon={<ChevronLeftIcon />}
               sx={{
-                borderRadius: '25px',
+                borderRadius: '10px',
                 textTransform: 'none',
                 boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
               }}

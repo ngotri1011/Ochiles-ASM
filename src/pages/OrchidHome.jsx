@@ -23,6 +23,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const RibbonContainer = styled("div")`
   position: absolute;
@@ -430,7 +431,7 @@ export default function Orchid() {
       </Container>
 
       {/* Newsletter Section */}
-      <Box sx={{ bgcolor: 'grey.100', py: 8, mb: 8, ml: 20 }}>
+      <Box sx={{py: 8, mb: 8, ml: 20 }}>
         <Container>
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={6}>
@@ -462,18 +463,18 @@ export default function Orchid() {
       </Box>
 
       {/* Orchid Grid Section */}
-      <Box sx={{ mt: 15, ml: 3 }} id="all-orchids">
+      <Box sx={{ mt: 15 }} id="all-orchids">
         <SectionTitle variant="h3">
           All Orchids
         </SectionTitle>
-        <Grid container spacing={2} sx={{ mt: 4, mb: 4, ml: 14 }}>
+        <Grid container spacing={2} sx={{ mt: 4, mb: 4, ml: 14 }} id="orchid-grid-1">
           {filteredOrchids && filteredOrchids.length > 0 ? (
             displayedOrchids.map((item) => (
-              <Grid xs={12} sm={6} md={4} lg={3} key={item.id}>
+              <Grid xs={12} sm={6} md={4} lg={3} key={item.id} id="orchid-grid-2" sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Card sx={{
                   position: 'relative',
                   width: 300,
-                  height: 460,
+                  height: 510,
                   mb: 2.5,
                   borderRadius: 2,
                   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -531,8 +532,8 @@ export default function Orchid() {
                       style={{ textDecoration: 'none' }}
                       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     >
-                      <Box>
-                        <Typography variant="h6" sx={{ fontWeight: 'bold', lineHeight: 0.9 }}>{item.name}</Typography>
+                      <Box sx={{color: 'inherit', textDecoration: 'none'}}>
+                        <Typography variant="h6" sx={{ fontWeight: 'bold', lineHeight: 0.9, color: 'inherit', textDecoration: 'none' }}>{item.name}</Typography>
                         <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.9rem', mt: 1 }}>${item.cost}</Typography>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, }}>
                           <Rating
@@ -552,17 +553,23 @@ export default function Orchid() {
                       sx={{
                         borderRadius: 1,
                         width: '100%',
-                        height: 36,
+                        height: 60,
                         fontSize: '14px',
                         p: '4px',
+                        py: 1.5,
                         textTransform: 'none',
-                        mt: 5,
+                        mb: 1,
+                        mt: 3,
+                        '&:hover': {
+                          backgroundColor: 'primary.dark',
+                        },
+                        display: 'flex',
+                        justifyContent: 'center',
                       }}
                     >
-                      Add to cart <ArrowForwardIcon fontSize="small" />
+                      Add to cart <AddShoppingCartIcon/>
                     </Button>
                   </CardContent>
-
                 </Card>
               </Grid>
             ))
@@ -594,7 +601,7 @@ export default function Orchid() {
       {/* MUI Dialog */}
       <Dialog
         open={Boolean(selectedItem)}
-        onClose={() => setSelectedItem(null)}
+        // onClose={() => setSelectedItem(null)}
         scroll="paper"
         maxWidth="sm"
         fullWidth
