@@ -25,6 +25,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const RibbonContainer = styled("div")`
   position: absolute;
@@ -300,7 +301,7 @@ export default function Orchid() {
                 </Accordion>
             </Box>
             {/* orchid grid section */}
-            <Box sx={{ flexGrow: 1,mt: 15, ml: 3 }} id="all-orchids">
+            <Box sx={{ flexGrow: 1, mt: 15, ml: 3 }} id="all-orchids">
                 <SectionTitle variant="h3">All Orchids</SectionTitle>
                 <Grid container spacing={2} sx={{ mt: 4, mb: 4 }}>
                     {filteredOrchids && filteredOrchids.length > 0 ? (
@@ -361,39 +362,42 @@ export default function Orchid() {
                                         gap: 0.75,
                                         height: '150px'
                                     }}>
-                                        <Typography variant="h6" sx={{ fontWeight: 'bold', lineHeight: 0.9 }}>{item.name}</Typography>
-                                        <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 0.9 }}>${item.cost}</Typography>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, }}>
-                                            <Rating
-                                                name="half-rating-read"
-                                                defaultValue={2.5}
-                                                precision={0.5}
-                                                value={item.rating}
-                                                readOnly
-                                                sx={{ color: 'primary.main' }}
-                                            />
-                                            <Typography color="text.secondary" sx={{ lineHeight: 0.5 }}>({item.rating}/5)</Typography>
-                                        </Box>
                                         <Link
                                             to={`/collections/detail/${item.id}`}
                                             style={{ textDecoration: 'none' }}
                                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                                         >
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                sx={{
-                                                    borderRadius: 1,
-                                                    width: '100%',
-                                                    height: 36,
-                                                    fontSize: '14px',
-                                                    p: '4px',
-                                                    textTransform: 'none'
-                                                }}
-                                            >
-                                                View Details <ArrowForwardIcon fontSize="small" />
-                                            </Button>
+                                            <Box>
+                                                <Typography variant="h6" sx={{ fontWeight: 'bold', lineHeight: 0.9 }}>{item.name}</Typography>
+                                                <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 0.9 }}>${item.cost}</Typography>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, }}>
+                                                    <Rating
+                                                        name="half-rating-read"
+                                                        defaultValue={2.5}
+                                                        precision={0.5}
+                                                        value={item.rating}
+                                                        readOnly
+                                                        sx={{ color: 'primary.main' }}
+                                                    />
+                                                    <Typography color="text.secondary" sx={{ lineHeight: 0.5 }}>({item.rating}/5)</Typography>
+                                                </Box>
+                                            </Box>
                                         </Link>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            sx={{
+                                                borderRadius: 1,
+                                                width: '100%',
+                                                height: 36,
+                                                fontSize: '14px',
+                                                p: '4px',
+                                                textTransform: 'none'
+                                            }}
+                                        >
+                                           Add to cart <AddShoppingCartIcon/>
+                                        </Button>
+
                                     </CardContent>
                                 </Card>
                             </Grid>
