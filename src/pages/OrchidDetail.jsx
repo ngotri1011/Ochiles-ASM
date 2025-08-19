@@ -162,6 +162,7 @@ const VideoPlayButton = styled(IconButton)(({ theme }) => ({
     transform: 'scale(1.1)',
   },
   transition: 'all 0.3s ease',
+  borderRadius: '10px',
 }));
 
 const getYouTubeEmbedUrl = (url) => {
@@ -334,12 +335,13 @@ export default function Detail() {
 
         <ImageContainer>
           <OrchidImage src={orchid.image} alt={orchid.name} />
+          
           {orchid.clip && (
             <VideoPlayButton
               onClick={() => setVideoOpen(true)}
               size="large"
-            >
-              <PlayCircleIcon sx={{ fontSize: 40 }} />
+            > 
+              <PlayCircleIcon sx={{ fontSize: 40 }} />Preview
             </VideoPlayButton>
           )}
         </ImageContainer>
@@ -349,168 +351,85 @@ export default function Detail() {
             {orchid.name}
           </Typography>
 
-          {/* Tabs Section */}
-          <Tabs value={value} onChange={handleTabChange}>
-            <Tab label="Description" />
-            <Tab label="Feedback" />
-          </Tabs>
+          <DetailsContainer>
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+              {orchid.info}
+            </Typography>
 
-          {value === 0 && (
-            <DetailsContainer>
-              <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
-                {orchid.info}
+            <InfoRow>
+              <LocationOnIcon />
+              <Typography variant="subtitle1">Origin: {orchid.origin}</Typography>
+            </InfoRow>
+
+            <InfoRow>
+              <AttachMoneyIcon />
+              <Typography variant="subtitle1">Price: ${orchid.cost.toLocaleString()}</Typography>
+            </InfoRow>
+
+            <InfoRow>
+              <Typography variant="subtitle1">
+                Featured: {' '}
+                {orchid.isFeatured ? (
+                  <CheckCircleIcon sx={{ color: "green", verticalAlign: 'middle' }} />
+                ) : (
+                  <CancelIcon sx={{ color: "red", verticalAlign: 'middle' }} />
+                )}
               </Typography>
+            </InfoRow>
 
-              <InfoRow>
-                <LocationOnIcon />
-                <Typography variant="subtitle1">Origin: {orchid.origin}</Typography>
-              </InfoRow>
+            <InfoRow>
+              <CategoryIcon />
+              <Typography variant="subtitle1">Category: {orchid.category}</Typography>
+            </InfoRow>
 
-              <InfoRow>
-                <AttachMoneyIcon />
-                <Typography variant="subtitle1">Price: ${orchid.cost.toLocaleString()}</Typography>
-              </InfoRow>
-
-              <InfoRow>
-                <Typography variant="subtitle1">
-                  Featured: {' '}
-                  {orchid.isFeatured ? (
-                    <CheckCircleIcon sx={{ color: "green", verticalAlign: 'middle' }} />
-                  ) : (
-                    <CancelIcon sx={{ color: "red", verticalAlign: 'middle' }} />
-                  )}
-                </Typography>
-              </InfoRow>
-
-              <InfoRow>
-                <CategoryIcon />
-                <Typography variant="subtitle1">Category: {orchid.category}</Typography>
-              </InfoRow>
-
-              <InfoRow>
-                <PaletteIcon />
-                <Typography variant="subtitle1">
-                  Color:{' '}
-                  <Box
-                    component="span"
-                    sx={{
-                      display: 'inline-block',
-                      width: 20,
-                      height: 20,
-                      bgcolor: orchid.color,
-                      borderRadius: '50%',
-                      border: '2px solid #ddd',
-                      verticalAlign: 'middle',
-                      ml: 1,
-                    }}
-                  />
-                </Typography>
-              </InfoRow>
-
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 2 }}>
-                <Typography variant="subtitle1">Rating:</Typography>
-                <Rating
-                  value={orchid.rating}
-                  readOnly
-                  precision={0.5}
+            <InfoRow>
+              <PaletteIcon />
+              <Typography variant="subtitle1">
+                Color:{' '}
+                <Box
+                  component="span"
+                  sx={{
+                    display: 'inline-block',
+                    width: 20,
+                    height: 20,
+                    bgcolor: orchid.color,
+                    borderRadius: '50%',
+                    border: '2px solid #ddd',
+                    verticalAlign: 'middle',
+                    ml: 1,
+                  }}
                 />
-                <Typography variant="body2" color="text.secondary">
-                  ({orchid.rating}/5)
-                </Typography>
-              </Box>
-            </DetailsContainer>
-          )}
+              </Typography>
+            </InfoRow>
 
-          {/* Feedback Tab Content */}
-          {value === 1 && (
-            <Box sx={{ p: 2, borderRadius: 2, maxWidth: 400, mx: 'auto' }}>
-              {userFeedback ? (
-
-                <Paper sx={{ p: 2, mt: 2 }}>
-                  <Box display="flex" alignItems="center" gap={2}>
-                    <Avatar src={userFeedback.avatar} />
-                    <Typography variant="subtitle1">{userFeedback.author}</Typography>
-                  </Box>
-                  <Rating value={userFeedback.rating} readOnly />
-                  <Typography>{userFeedback.comment}</Typography>
-                  <Typography variant="caption" color="textSecondary">{new Date(userFeedback.date).toLocaleString()}</Typography>
-                  <Box display="flex" gap={1} mt={1}>
-                    <IconButton color="primary" onClick={() => setUserFeedback(null)}><EditIcon /></IconButton>
-                    <IconButton color="error" onClick={handleDeleteFeedback}><DeleteIcon /></IconButton>
-                  </Box>
-                </Paper>
-
-              ) : (
-                <Box sx={{ p: 2, mt: 2 }}>
-                  <Typography variant="h4" gutterBottom>
-                    Give your feedback:
-                  </Typography>
-                  <form onSubmit={formik.handleSubmit}>
-                    <Typography>Rating:</Typography>
-                    <Rating
-                      name="rating"
-                      value={formik.values.rating}
-                      onChange={handleRatingChange}
-                    />
-                    {formik.touched.rating && formik.errors.rating && (
-                      <Typography color="error" variant="body2">{formik.errors.rating}</Typography>
-                    )}
-
-                    <TextField
-                      fullWidth
-                      margin="normal"
-                      name="email"
-                      type="email"
-                      label="Email"
-                      value={formik.values.email}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={formik.touched.email && Boolean(formik.errors.email)}
-                      helperText={formik.touched.email && formik.errors.email}
-                    />
-
-                    <TextField
-                      fullWidth
-                      multiline
-                      rows={4}
-                      margin="normal"
-                      name="comment"
-                      label="Comment"
-                      value={formik.values.comment}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={formik.touched.comment && Boolean(formik.errors.comment)}
-                      helperText={formik.touched.comment && formik.errors.comment}
-                    />
-
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      fullWidth
-                      sx={{ mt: 2 }}
-                    >
-                      Submit
-                    </Button>
-                  </form>
-                </Box>
-              )}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 2 }}>
+              <Typography variant="subtitle1">Rating:</Typography>
+              <Rating
+                value={orchid.rating}
+                readOnly
+                precision={0.5}
+              />
+              <Typography variant="body2" color="text.secondary">
+                ({orchid.rating}/5)
+              </Typography>
             </Box>
-          )}
+          </DetailsContainer>
+
           <ControlContainer>
-            <QuantitySelector quantity={quantity} setQuantity={setQuantity}/>
+            <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
             <Button
-              sx={{ backgroundColor: 'primary.main', color: 'background.default', borderRadius: 2, px: 3,width: '100%', mx: 2 }}
+              sx={{ backgroundColor: 'primary.main', color: 'background.default', borderRadius: 2, px: 3, width: '100%', mx: 2 }}
             >
               Add to Cart
             </Button>
-            <Button sx={{backgroundColor:'background.default', color: 'text.primary',mx: 2, px:6}}>
+            <Button sx={{ backgroundColor: 'background.default', color: 'text.primary', mx: 2, px: 6 }}>
               <BookmarkBorderIcon />
               <Typography> Wishlist</Typography>
             </Button>
           </ControlContainer>
         </DetailsContainer>
       </DetailCard>
+
       {/* Video Modal */}
       <Dialog
         open={videoOpen}

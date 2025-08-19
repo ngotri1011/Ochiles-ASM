@@ -601,7 +601,7 @@ export default function Orchid() {
       {/* MUI Dialog */}
       <Dialog
         open={Boolean(selectedItem)}
-        // onClose={() => setSelectedItem(null)}
+        onClose={() => setSelectedItem(null)}
         scroll="paper"
         maxWidth="sm"
         fullWidth
